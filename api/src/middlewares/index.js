@@ -1,7 +1,7 @@
 module.exports = {
    errorHandler: require('./errorHandler'),
    error404: require('./error404'),
-   getCountryByPk: require('./getCountryByPk'),
+   getCountryAndActivityById: require('./getCountryAndActivityById'),
    getAllCountries: require('./getAllCountries'),
    getAllActivities: require('./getAllActivities')
 }

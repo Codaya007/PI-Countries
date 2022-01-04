@@ -29,7 +29,7 @@ conn.sync({ force: true })
     let response = await getAllCountriesAPI();
 
     if (response.error) {
-      console.log(response.error);
+      // console.log(response.error);
     } else {
       let countriesMaped = response.countries.map((country) => {
         return {
@@ -45,7 +45,7 @@ conn.sync({ force: true })
       });
 
       // ya que tengo cada país con los datos que necesito, procedo a guardarlos en la DB
-      await Country.bulkCreate(countriesMaped);
+      await Country.bulkCreate(countriesMaped, { validate: true });
     }
 
     server.listen(PORT, () => {
