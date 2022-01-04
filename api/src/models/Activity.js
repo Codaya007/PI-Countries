@@ -31,7 +31,8 @@ module.exports = (Sequelize, DataTypes) => {
       Activity.belongsToMany(
          models.Country,
          {
-            through: 'CountriesActivities'
+            through: 'CountriesActivities',
+            timestamps: false
          }
       );
    }
