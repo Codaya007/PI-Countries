@@ -37,10 +37,6 @@ router.post('/',
 
       let { nombre, dificultad, duracion, temporada, paises = [] } = req.body;
 
-      if (!nombre) {
-         return res.status(400).json('El campo nombre es requerido');
-      }
-
       const newActivity = {
          nombre,
          dificultad,
