@@ -34,7 +34,14 @@ module.exports = async (req, res, next) => {
             ]
          }
       });
-      req.countries = countries;
+
+      countries.length ? (
+         req.countries = countries
+      ) : (
+         req.error = {
+            status: 400,
+            message: 'ID inválido'
+         });
    } else {
       try {
          countries = await Country.findAll({});
