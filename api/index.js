@@ -53,7 +53,7 @@ conn.sync({ force: true })
     })
   })
   .catch((err) => {
-    console.log(err.message);
+    // console.log(err.message);
     console.log(`No se ha podido conectar a la BBDD`);
   });
 
