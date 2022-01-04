@@ -3,6 +3,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const { errorHandler } = require('./middlewares/index.js');
+const error404 = require('./middlewares/error404.js');
 
 require('./db.js');
 
@@ -25,11 +27,7 @@ server.use((req, res, next) => {
 server.use('/', routes);
 
 // Error catching endware.
-server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  const status = err.status || 500;
-  const message = err.message || err;
-  console.error(err);
-  res.status(status).send(message);
-});
+server.use('*', error404);
+server.use(errorHandler);
 
 module.exports = server;
