@@ -21,6 +21,7 @@ router.post('/',
       check('nombre', 'El campo nombre es requerido').trim().isString().notEmpty(),
       check('nombre', 'El campo nombre no puede estar vacío').trim().notEmpty(),
       check('dificultad', 'Debe ser un numero entre 1 y 5').isNumeric({ min: 1, max: 5 }).optional(),
+      check('dificultad', 'Debe ser un numero entero').custom((value) => value % 1 === 0).optional(),
       check('duracion', 'Debe ser un numero entero correspondiente a los minutos de duracion').isNumeric().optional
          (),
       check('temporada', 'Debe ser un valor valido: invierno, verano, primavera, otoño').trim().isString().custom((str) => {
