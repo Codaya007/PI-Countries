@@ -3,5 +3,7 @@ module.exports = {
    error404: require('./error404'),
    getCountryAndActivityById: require('./getCountryAndActivityById'),
    getAllCountries: require('./getAllCountries'),
-   getAllActivities: require('./getAllActivities')
+   getAllActivities: require('./getAllActivities'),
+   getAllContinents: require('./getAllContinents'),
+   getCountriesByContinent: require('./getCountriesByContinent')
 }

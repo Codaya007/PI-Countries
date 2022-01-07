@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
    let { name } = req.query;
    let countries;
    if (name) {
-      console.log(name);
+      // console.log(name);
       name = name.toLowerCase();
       countries = await Country.findAll({
          where: {
@@ -39,8 +39,8 @@ module.exports = async (req, res, next) => {
          req.countries = countries
       ) : (
          req.error = {
-            status: 400,
-            message: 'ID inválido'
+            status: 404,
+            message: 'Ningún país coincide con el criterio de búsqueda'
          });
    } else {
       try {

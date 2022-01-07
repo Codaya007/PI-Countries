@@ -15,14 +15,19 @@ module.exports = async (req, res, next) => {
             }
          }
       });
-      country = country.toJSON();
-      country.activities = country.Activities;
-      delete country.Activities;
 
-      country ? req.country = country : req.error = {
-         status: 404,
-         message: 'Country not found'
-      };
+      if (country) {
+         country = country.toJSON();
+         country.activities = country.Activities;
+         delete country.Activities;
+
+         req.country = country
+      } else {
+         req.error = {
+            status: 404,
+            message: 'Country not found'
+         };
+      }
 
    } catch (err) {
       console.log(err);
