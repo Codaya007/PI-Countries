@@ -74,7 +74,9 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { options: state.options };
+  return {
+    options: state.options,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

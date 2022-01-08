@@ -80,7 +80,6 @@ const FormActivity = ({ createActivity, countries, loading }) => {
     } else {
       setPaisesForm({ ...paisesForm, current: "" });
     }
-    validateForm(form);
   };
 
   const deleteBandera = (event) => {
@@ -107,6 +106,10 @@ const FormActivity = ({ createActivity, countries, loading }) => {
   useEffect(() => {
     setForm((prev) => ({ ...prev, paises: paisesForm.ids }));
   }, [paisesForm.ids]);
+
+  useEffect(() => {
+    setErrors(validateForm(form));
+  }, [form]);
 
   return (
     <>

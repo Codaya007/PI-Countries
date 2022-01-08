@@ -10,8 +10,10 @@ import {
    GET_COUNTRIES,
    SET_OPTIONS,
    RESTART_COUNTRIES,
-   SORT
+   SORT,
+   RESTART_CONTINENT
 } from './types';
+import { toast } from "react-toastify";
 
 // ACCIONES DE PETICIONES DE INFORMACIÓN
 export function getAllCountries() {
@@ -23,6 +25,7 @@ export function getAllCountries() {
          dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
+         toast.error("No se han podido obtener los países");
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -57,6 +60,7 @@ export function getContinents() {
          dispatch({ type: GET_CONTINENTS, continents });
       } catch (err) {
          console.log(err);
+         toast.error("No se han podido obtener los continentes");
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -66,6 +70,7 @@ export function getContinents() {
 export function searchByName(query) {
    return async (dispatch) => {
       try {
+         dispatch(restartContinent());
          dispatch({ type: SET_LOADING, payload: true });
          const response = await helpHttp()
             .get(URL_SEARCH + query)
@@ -75,6 +80,7 @@ export function searchByName(query) {
       } catch (err) {
          console.log(err);
          dispatch({ type: SEARCH_COUNTRIES, countries: [] });
+         toast.error("Ningún país coincide con el criterio de búsqueda");
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -92,8 +98,10 @@ export function createActivity(activity) {
                   "Content-Type": "application/json",
                },
             })
+         toast.success("La actividad ha sido creada exitosamente!");
       } catch (err) {
          console.log(err);
+         toast.error("Ha ocurrido un error! No se ha podido crear la actividad");
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -104,6 +112,7 @@ export function createActivity(activity) {
 export function searchByActivity(query) {
    return async (dispatch) => {
       try {
+         dispatch(restartContinent());
          dispatch({ type: SET_LOADING, payload: true });
          const response = await helpHttp()
             .get(URL_SEARCH + query)
@@ -112,18 +121,19 @@ export function searchByActivity(query) {
          dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
+         dispatch({ type: SEARCH_COUNTRIES, countries: [] });
+         toast.error("Ningún país coincide con el criterio de búsqueda");
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
    }
 }
 
-// ESTABLECEDOR DE ORDENAMIENTO
+// ACCIONES DE ORDENAMIENTO
 export function setOptions(name, value) {
    return { type: SET_OPTIONS, payload: { name, value } };
 }
 
-// ACCIONES DE ORDENAMIENTO
 export function sort() {
    return { type: SORT };
 }
@@ -132,6 +142,11 @@ export function sort() {
 export function restartFilters() {
    return { type: RESTART_FILTERS };
 }
+
+// necesito restablecer el continente antes de realizar las búsquedas
+export function restartContinent() {
+   return { type: RESTART_CONTINENT };
+};
 
 export function filterByContinent(continent) {
    return async (dispatch) => {
@@ -149,6 +164,7 @@ export function filterByContinent(continent) {
          } catch (err) {
             console.log(err);
             dispatch({ type: FILTER_BY_CONTINENT, countries: [] });
+            toast.error("Ningún país coincide con el criterio de búsqueda");
          } finally {
             dispatch({ type: SET_LOADING, payload: false });
          }

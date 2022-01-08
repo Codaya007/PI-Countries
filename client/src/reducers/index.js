@@ -6,7 +6,8 @@ import {
    RESTART_FILTERS,
    FILTER_BY_ACTIVITY,
    FILTER_BY_CONTINENT,
-   SET_LOADING
+   SET_LOADING,
+   RESTART_CONTINENT
 } from '../actions/types';
 
 const initialState = {
@@ -14,8 +15,6 @@ const initialState = {
    continents: [],
    countriesFiltered: [],
    loading: null,
-   successMessage: "",
-   errorMessage: "",
    options: {
       searchBy: "pais",
       sort: "asc",
@@ -37,6 +36,8 @@ const reducer = (state = initialState, action) => {
          return { ...state, loading: action.payload };
       case GET_CONTINENTS:
          return { ...state, continents: action.continents };
+      case RESTART_CONTINENT:
+         return { ...state, options: { ...state.options, continent: "Todos" } };
       case SEARCH_COUNTRIES:
       case FILTER_BY_ACTIVITY:
       case FILTER_BY_CONTINENT:

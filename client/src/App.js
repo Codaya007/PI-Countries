@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import { getAllCountries, getContinents } from "./actions";
 import { bindActionCreators } from "redux";
 import LandingPage from './screens/LandingPage';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function App({ getAllCountries, getContinents }) {
 
@@ -19,6 +21,7 @@ function App({ getAllCountries, getContinents }) {
 
   return (
     <div className="App">
+      <ToastContainer />
       <Navbar />
       <Routes>
         <Route path='/'>
