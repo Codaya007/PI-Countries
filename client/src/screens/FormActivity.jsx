@@ -25,7 +25,6 @@ const initialPaisesForm = {
 const FormActivity = ({ createActivity, countries, loading }) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [response, setResponse] = useState(null);
   const [paisesForm, setPaisesForm] = useState(initialPaisesForm);
   const [paises, setPaises] = useState([]);
 
@@ -54,20 +53,8 @@ const FormActivity = ({ createActivity, countries, loading }) => {
 
     if (Object.keys(errors).length === 0) {
       createActivity(form);
-      setResponse(true);
       setForm(initialForm); //limpiamos el form
       setPaisesForm(initialPaisesForm);
-
-      // let response = createActivity(form);
-      // si el formulario se envió exitosamente
-      // if (response) {
-      //   setResponse(true);
-      //   setForm(initialForm); //limpiamos el form
-      //   setPaisesForm(initialPaisesForm);
-      //   setTimeout(() => {
-      //     setResponse(false);
-      //   }, 4000);
-      // }
     } else {
       return;
     }
@@ -93,6 +80,24 @@ const FormActivity = ({ createActivity, countries, loading }) => {
     } else {
       setPaisesForm({ ...paisesForm, current: "" });
     }
+    validateForm(form);
+  };
+
+  const deleteBandera = (event) => {
+    const { name } = event.target;
+
+    const countryToDelete = paisesForm.seleccionados.find(
+      (pais) => pais.id === name
+    );
+
+    setPaises([...paises, countryToDelete]);
+    setPaisesForm({
+      ...paisesForm,
+      seleccionados: paisesForm.seleccionados.filter(
+        (pais) => pais.id !== name
+      ),
+      ids: paisesForm.ids.filter((idPais) => name !== idPais),
+    });
   };
 
   useEffect(() => {
@@ -185,7 +190,7 @@ const FormActivity = ({ createActivity, countries, loading }) => {
                 src={pais.imagen_bandera}
                 alt={pais.nombre}
                 title={`Eliminar ${pais.nombre}`}
-                onClick={handleClickBandera}
+                onClick={deleteBandera}
                 name={pais.id}
               />
             ))
@@ -199,7 +204,6 @@ const FormActivity = ({ createActivity, countries, loading }) => {
           <Button normal content="Crear" type="submit" />
         )}
       </form>
-      {response && <div>'Formulario enviado exitosamente'</div>}
     </>
   );
 };

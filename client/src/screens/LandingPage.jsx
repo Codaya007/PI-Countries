@@ -1,9 +1,10 @@
 import React from "react";
+import Button from "../components/Button";
 
 const LandingPage = () => {
   return (
     <div>
-      <button>Empezar</button>
+      <Button href="/countries" content={"Empezar a explorar"} />
     </div>
   );
 };

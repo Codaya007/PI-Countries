@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { connect } from "react-redux";
 import { getAllCountries, getContinents } from "./actions";
 import { bindActionCreators } from "redux";
+import LandingPage from './screens/LandingPage';
 
 function App({ getAllCountries, getContinents }) {
 
@@ -21,6 +22,7 @@ function App({ getAllCountries, getContinents }) {
       <Navbar />
       <Routes>
         <Route path='/'>
+          <Route index element={<LandingPage />} />
           <Route path='countries'>
             <Route index element={<Countries />} />
             <Route path=':id' element={<CountryDetail />} />
@@ -28,8 +30,8 @@ function App({ getAllCountries, getContinents }) {
           <Route path='activities'>
             <Route path='create' element={<FormActivity />} />
           </Route>
-          <Route path='*' element={<Error404 />} />
         </Route>
+        <Route path='*' element={<Error404 />} />
       </Routes>
     </div>
   );

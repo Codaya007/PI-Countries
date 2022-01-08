@@ -1,15 +1,16 @@
 import { URL_GET_ALL_CONTINENTS, URL_GET_ALL_COUNTRIES, URL_GET_COUNTRIES_BY_CONTINENT, URL_POST_ACTIVITY, URL_SEARCH } from '../assets/constants';
 import { helpHttp } from '../helpers/helpHttp';
 import {
-   SORT_BY_POPULATION,
-   SORT_ASC, SORT_DESC,
    GET_CONTINENTS,
    SEARCH_COUNTRIES,
    RESTART_FILTERS,
-   FILTER_BY_ACTIVITY,
+   // FILTER_BY_ACTIVITY,
    FILTER_BY_CONTINENT,
    SET_LOADING,
-   GET_COUNTRIES
+   GET_COUNTRIES,
+   SET_OPTIONS,
+   RESTART_COUNTRIES,
+   SORT
 } from './types';
 
 // ACCIONES DE PETICIONES DE INFORMACIÓN
@@ -19,6 +20,7 @@ export function getAllCountries() {
       try {
          const countries = await helpHttp().get(URL_GET_ALL_COUNTRIES);
          dispatch({ type: GET_COUNTRIES, countries: countries.data });
+         dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
       } finally {
@@ -41,7 +43,7 @@ export function getContinents() {
             images[path.substring(2, path.length - 4)] = reqSvgs(path);
             return images;
          }, {});
-         console.log(svgs);
+         // console.log(svgs);
 
          const response = await helpHttp().get(URL_GET_ALL_CONTINENTS);
          let continents = response.data;
@@ -61,16 +63,18 @@ export function getContinents() {
    };
 }
 
-export function searchCountries(search) {
+export function searchByName(query) {
    return async (dispatch) => {
       try {
          dispatch({ type: SET_LOADING, payload: true });
          const response = await helpHttp()
-            .get(URL_SEARCH + search)
+            .get(URL_SEARCH + query)
 
          dispatch({ type: SEARCH_COUNTRIES, countries: response.data });
+         dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
+         dispatch({ type: SEARCH_COUNTRIES, countries: [] });
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -80,7 +84,6 @@ export function searchCountries(search) {
 export function createActivity(activity) {
    return async (dispatch) => {
       dispatch({ type: SET_LOADING, payload: true });
-      let response;
       try {
          helpHttp()
             .post(URL_POST_ACTIVITY, {
@@ -89,50 +92,24 @@ export function createActivity(activity) {
                   "Content-Type": "application/json",
                },
             })
-         response = true;
       } catch (err) {
          console.log(err);
-         response = false;
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
 
-      return response;
    }
 }
 
-// ACCIONES DE ORDENAMIENTO
-export function sortByPopulation() {
-   return { type: SORT_BY_POPULATION };
-}
-
-export function sortAsc() {
-   return { type: SORT_ASC };
-}
-
-export function sortDesc() {
-   return { type: SORT_DESC };
-}
-
-
-// ACCIONES DE FILTRADO
-
-export function restartFilters() {
-   return { type: RESTART_FILTERS };
-}
-
-export function filterByActivity(typeActivity) {
-   return { type: FILTER_BY_ACTIVITY, typeActivity };
-}
-
-export function filterByContinent(continent) {
+export function searchByActivity(query) {
    return async (dispatch) => {
       try {
          dispatch({ type: SET_LOADING, payload: true });
          const response = await helpHttp()
-            .get(URL_GET_COUNTRIES_BY_CONTINENT + continent)
+            .get(URL_SEARCH + query)
 
-         dispatch({ type: FILTER_BY_CONTINENT, countries: response.data });
+         dispatch({ type: SEARCH_COUNTRIES, countries: response.data });
+         dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
       } finally {
@@ -141,4 +118,41 @@ export function filterByContinent(continent) {
    }
 }
 
+// ESTABLECEDOR DE ORDENAMIENTO
+export function setOptions(name, value) {
+   return { type: SET_OPTIONS, payload: { name, value } };
+}
 
+// ACCIONES DE ORDENAMIENTO
+export function sort() {
+   return { type: SORT };
+}
+
+// ACCIONES DE FILTRADO
+export function restartFilters() {
+   return { type: RESTART_FILTERS };
+}
+
+export function filterByContinent(continent) {
+   return async (dispatch) => {
+      if (continent === "Todos") {
+         dispatch({ type: RESTART_COUNTRIES });
+         dispatch({ type: SORT });
+      } else {
+         try {
+            dispatch({ type: SET_LOADING, payload: true });
+            const response = await helpHttp()
+               .get(URL_GET_COUNTRIES_BY_CONTINENT + continent)
+
+            dispatch({ type: FILTER_BY_CONTINENT, countries: response.data });
+            dispatch({ type: SORT });
+         } catch (err) {
+            console.log(err);
+            dispatch({ type: FILTER_BY_CONTINENT, countries: [] });
+         } finally {
+            dispatch({ type: SET_LOADING, payload: false });
+         }
+
+      }
+   }
+}

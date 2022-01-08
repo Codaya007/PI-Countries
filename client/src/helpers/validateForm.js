@@ -33,14 +33,18 @@ const validateForm = (form) => {
          "Los valores permitidos para el campo temporada son Invierno, Verano, Primavera y Otoño";
    }
 
-   for (let i = 0; i < paises.length; i++) {
-      if (!paises[i].trim()) {
-         console.log(paises[i]);
-         errors.paises = "El campo países contiene un valor no válido!";
-         break;
-      } else if (paises[i].length > 3) {
-         errors.paises = "El campo países contiene un código no válido";
-         break;
+   if (paises.length === 0) {
+      errors.paises = "Seleccione al menos un país"
+   } else {
+      for (let i = 0; i < paises.length; i++) {
+         if (!paises[i].trim()) {
+            // console.log(paises[i]);
+            errors.paises = "El campo países contiene un valor no válido!";
+            break;
+         } else if (paises[i].length > 3) {
+            errors.paises = "El campo países contiene un código no válido";
+            break;
+         }
       }
    }
 

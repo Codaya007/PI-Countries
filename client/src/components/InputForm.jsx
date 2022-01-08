@@ -7,8 +7,8 @@ const InputForm = ({
   name,
   value,
   type,
-  handleChange,
-  handleBlur,
+  handleChange = null,
+  handleBlur = null,
   min = 0,
   max = 100,
 }) => {
