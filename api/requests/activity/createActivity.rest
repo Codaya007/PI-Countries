@@ -6,7 +6,7 @@ Content-Type: application/json
 {
       "nombre": "Buceo",
       "dificultad": "4",
-      "duracion": 30,
+      "duracion": "12/01/2021 24/01/2021",
       "temporada": "otoño",
       "paises": ["ecu", "per", "ata"]
 }
@@ -18,7 +18,7 @@ Content-Type: application/json
 {
       "nombre": "kayak",
       "dificultad": "3",
-      "duracion": 120,
+      "duracion": "12/01/2021 24/01/2021",
       "temporada": "verano",
       "paises": ["ecu", "ata", "tkm", "sau"]
 }
@@ -30,7 +30,7 @@ Content-Type: application/json
 {
       "nombre": "Cabalgata",
       "dificultad": "4",
-      "duracion": 120,
+      "duracion": "12/01/2021 24/01/2021",
       "temporada": "verano",
       "paises": ["mne", "rwa", "sgp", "moz", "fin", "gum", "irn", "ata"]
 }
@@ -42,7 +42,7 @@ Content-Type: application/json
 {
       "nombre": "Canopy",
       "dificultad": "5",
-      "duracion": 120,
+      "duracion": "01/02/2022 24/01/2021",
       "temporada": "verano",
       "paises": ["twn", "srb", "hmd", "esp"]
 }

@@ -9,7 +9,6 @@ module.exports = async (req, res, next) => {
       name = name.toLowerCase();
       countries = await Country.findAll({
          where: {
-            // investigar para cambiarlo por una regex
             [Op.or]: [
                {
                   nombre: {
