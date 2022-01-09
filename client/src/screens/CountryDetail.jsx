@@ -51,8 +51,8 @@ const CountryDetail = () => {
       <p>{country.poblacion}</p>
       <h3>Actividades que se pueden realizar: </h3>
       <div>
-        {country.activities.length > 0 ? (
-          country.activities.map((actividad) => {
+        {country.actividades.length > 0 ? (
+          country.actividades.map((actividad) => {
             const { nombre, duracion, dificultad, temporada, id } = actividad;
             return (
               <Activity

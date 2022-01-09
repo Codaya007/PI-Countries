@@ -6,12 +6,13 @@ import validateForm from "../helpers/validateForm";
 import { TEMPORADAS } from "../assets/constants";
 import { connect } from "react-redux";
 import { createActivity } from "../actions";
+import { toast } from "react-toastify";
 
 // INICIALIZACIONES DE ESTADO
 const initialForm = {
   nombre: "",
   dificultad: "1",
-  duracion: 60,
+  duracion: { fecha_inicio: "", fecha_fin: "" },
   temporada: "Verano",
   paises: [],
 };
@@ -31,12 +32,21 @@ const FormActivity = ({ createActivity, countries, loading }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setForm((prevState) => {
-      return {
-        ...prevState,
-        [name]: name === "paises" ? paisesForm.ids : value,
-      };
-    });
+    if (name === "fecha_inicio" || name === "fecha_fin") {
+      setForm((prevState) => {
+        return {
+          ...prevState,
+          duracion: { ...prevState.duracion, [name]: value },
+        };
+      });
+    } else {
+      setForm((prevState) => {
+        return {
+          ...prevState,
+          [name]: name === "paises" ? paisesForm.ids : value,
+        };
+      });
+    }
   };
 
   // Cuando el input pierda el foco de atención, se tienen que validar los campos
@@ -46,16 +56,25 @@ const FormActivity = ({ createActivity, countries, loading }) => {
     setErrors(validateForm(form));
   };
 
+  const resetForm = () => {
+    setForm(initialForm); //limpiamos el form
+    setPaises([...paises, ...paisesForm.seleccionados]);
+    setPaisesForm(initialPaisesForm);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let errors = validateForm(form);
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      createActivity(form);
-      setForm(initialForm); //limpiamos el form
-      setPaisesForm(initialPaisesForm);
+      createActivity({
+        ...form,
+        duracion: form.duracion.fecha_inicio + " " + form.duracion.fecha_fin,
+      });
+      resetForm();
     } else {
+      toast.warn("El formulario no puede enviarse ya que contiene errores");
       return;
     }
   };
@@ -135,14 +154,25 @@ const FormActivity = ({ createActivity, countries, loading }) => {
           handleBlur={handleBlur}
         />
         {errors.dificultad && <span>{errors.dificultad}</span>}
-        <InputForm
-          title="Duración en min:"
-          type="number"
-          name="duracion"
-          value={form.duracion}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-        />
+        <div>
+          <label>Fechas:</label>
+          <label>Inicio</label>
+          <input
+            type={"date"}
+            value={form.duracion.fecha_inicio}
+            name="fecha_inicio"
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <label>Fin</label>
+          <input
+            type={"date"}
+            value={form.duracion.fecha_fin}
+            name="fecha_fin"
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </div>
         {errors.duracion && <span>{errors.duracion}</span>}
         <InputForm
           select
@@ -204,8 +234,9 @@ const FormActivity = ({ createActivity, countries, loading }) => {
 
         {loading && <Loading />}
         {Object.keys(errors).length === 0 && !loading && (
-          <Button normal content="Crear" type="submit" />
+          <Button normal content="Crear actividad" type="submit" />
         )}
+        <input type="button" value="Limpiar campos" onClick={resetForm} />
       </form>
     </>
   );

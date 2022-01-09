@@ -1,13 +1,13 @@
+import { toast } from 'react-toastify';
 import { GET_COUNTRIES, RESTART_COUNTRIES, SET_OPTIONS } from '../actions/types';
 import {
    SORT,
    GET_CONTINENTS,
-   SEARCH_COUNTRIES,
+   FILTER_BY_NAME,
    RESTART_FILTERS,
    FILTER_BY_ACTIVITY,
    FILTER_BY_CONTINENT,
    SET_LOADING,
-   RESTART_CONTINENT
 } from '../actions/types';
 
 const initialState = {
@@ -36,12 +36,20 @@ const reducer = (state = initialState, action) => {
          return { ...state, loading: action.payload };
       case GET_CONTINENTS:
          return { ...state, continents: action.continents };
-      case RESTART_CONTINENT:
-         return { ...state, options: { ...state.options, continent: "Todos" } };
-      case SEARCH_COUNTRIES:
+      case FILTER_BY_NAME:
       case FILTER_BY_ACTIVITY:
       case FILTER_BY_CONTINENT:
-         return { ...state, countriesFiltered: action.countries };
+         filtered = action.countries;
+
+         if (filtered.length === 0) {
+            return { ...state, countriesFiltered: filtered };
+         } else {
+            if (state.options.continent !== "Todos") {
+               filtered = filtered.filter(pais => pais.continente === state.options.continent)
+            }
+            filtered.length === 0 && toast.error('Ningún país coincide con el criterio de búsqueda');
+            return { ...state, countriesFiltered: filtered };
+         }
       case RESTART_FILTERS:
          return { ...state, options: initialState.options };
       case RESTART_COUNTRIES:

@@ -1,9 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Button = ({ normal, content, type = null, href = "/countries" }) => {
+const Button = ({
+  normal,
+  content,
+  type = null,
+  href = "/countries",
+  handleClick,
+}) => {
   return normal ? (
-    <button type={type}>{content}</button>
+    <button onClick={handleClick} type={type}>
+      {content}
+    </button>
   ) : (
     <Link to={href}>
       <button>{content}</button>

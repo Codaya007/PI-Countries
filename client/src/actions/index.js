@@ -1,17 +1,16 @@
-import { URL_GET_ALL_CONTINENTS, URL_GET_ALL_COUNTRIES, URL_GET_COUNTRIES_BY_CONTINENT, URL_POST_ACTIVITY, URL_SEARCH } from '../assets/constants';
+import { URL_GET_ALL_CONTINENTS, URL_GET_ALL_COUNTRIES, URL_GET_COUNTRIES_BY_CONTINENT, URL_POST_ACTIVITY, URL_SEARCH_BY_NAME, URL_SEARCH_BY_ACTIVITY } from '../assets/constants';
 import { helpHttp } from '../helpers/helpHttp';
 import {
    GET_CONTINENTS,
-   SEARCH_COUNTRIES,
+   FILTER_BY_NAME,
    RESTART_FILTERS,
-   // FILTER_BY_ACTIVITY,
    FILTER_BY_CONTINENT,
    SET_LOADING,
    GET_COUNTRIES,
    SET_OPTIONS,
    RESTART_COUNTRIES,
    SORT,
-   RESTART_CONTINENT
+   FILTER_BY_ACTIVITY,
 } from './types';
 import { toast } from "react-toastify";
 
@@ -70,16 +69,15 @@ export function getContinents() {
 export function searchByName(query) {
    return async (dispatch) => {
       try {
-         dispatch(restartContinent());
          dispatch({ type: SET_LOADING, payload: true });
          const response = await helpHttp()
-            .get(URL_SEARCH + query)
+            .get(URL_SEARCH_BY_NAME + query)
 
-         dispatch({ type: SEARCH_COUNTRIES, countries: response.data });
+         dispatch({ type: FILTER_BY_NAME, countries: response.data });
          dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
-         dispatch({ type: SEARCH_COUNTRIES, countries: [] });
+         dispatch({ type: FILTER_BY_NAME, countries: [] });
          toast.error("Ningún país coincide con el criterio de búsqueda");
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
@@ -91,7 +89,7 @@ export function createActivity(activity) {
    return async (dispatch) => {
       dispatch({ type: SET_LOADING, payload: true });
       try {
-         helpHttp()
+         await helpHttp()
             .post(URL_POST_ACTIVITY, {
                body: activity,
                headers: {
@@ -112,16 +110,15 @@ export function createActivity(activity) {
 export function searchByActivity(query) {
    return async (dispatch) => {
       try {
-         dispatch(restartContinent());
          dispatch({ type: SET_LOADING, payload: true });
          const response = await helpHttp()
-            .get(URL_SEARCH + query)
+            .get(URL_SEARCH_BY_ACTIVITY + query)
 
-         dispatch({ type: SEARCH_COUNTRIES, countries: response.data });
+         dispatch({ type: FILTER_BY_ACTIVITY, countries: response.data });
          dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
-         dispatch({ type: SEARCH_COUNTRIES, countries: [] });
+         dispatch({ type: FILTER_BY_ACTIVITY, countries: [] });
          toast.error("Ningún país coincide con el criterio de búsqueda");
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
@@ -142,11 +139,6 @@ export function sort() {
 export function restartFilters() {
    return { type: RESTART_FILTERS };
 }
-
-// necesito restablecer el continente antes de realizar las búsquedas
-export function restartContinent() {
-   return { type: RESTART_CONTINENT };
-};
 
 export function filterByContinent(continent) {
    return async (dispatch) => {

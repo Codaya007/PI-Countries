@@ -18,12 +18,8 @@ const validateForm = (form) => {
       errors.dificultad = "El nivel de dificultad permitido es de 1 a 5";
    }
 
-   if (!duracion) {
-      errors.duracion = "El campo 'duración' es un campo requerido";
-   } else if (isNaN(parseInt(duracion))) {
-      errors.duracion = "El campo duración debe ser un número! ";
-   } else if (parseFloat(duracion) % 1 > 0) {
-      errors.duracion = "El campo duración debe ser un número entero";
+   if (!duracion.fecha_inicio || !duracion.fecha_fin) {
+      errors.duracion = "Los campos fecha son requeridos!";
    }
 
    if (!temporada.trim()) {

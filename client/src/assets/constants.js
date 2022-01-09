@@ -1,6 +1,8 @@
 const baseUrl = "http://localhost:5000";
 
-export const URL_SEARCH = `${baseUrl}/countries?name=`;
+export const URL_SEARCH_BY_NAME = `${baseUrl}/countries?name=`;
+
+export const URL_SEARCH_BY_ACTIVITY = `${baseUrl}/countries/activity?activity=`;
 
 export const URL_GET_ALL_COUNTRIES = `${baseUrl}/countries`;
 
