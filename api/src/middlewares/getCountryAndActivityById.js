@@ -11,14 +11,14 @@ module.exports = async (req, res, next) => {
          include: {
             model: Activity,
             through: {
-               attributes: []
+               attributes: [] //que atributos de aquí quiero o si está vacío me elimina el atributo Country anidado
             }
          }
       });
 
       if (country) {
          country = country.toJSON();
-         country.activities = country.Activities;
+         country.actividades = country.Activities;
          delete country.Activities;
 
          req.country = country

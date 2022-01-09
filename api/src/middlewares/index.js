@@ -5,5 +5,6 @@ module.exports = {
    getAllCountries: require('./getAllCountries'),
    getAllActivities: require('./getAllActivities'),
    getAllContinents: require('./getAllContinents'),
-   getCountriesByContinent: require('./getCountriesByContinent')
+   getCountriesByContinent: require('./getCountriesByContinent'),
+   getCountriesByActivity: require('./getCountriesByActivity'),
 }
