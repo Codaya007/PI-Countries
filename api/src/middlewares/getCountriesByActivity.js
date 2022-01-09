@@ -40,7 +40,7 @@ module.exports = async (req, res, next) => {
             }],
          });
 
-         if (countries) {
+         if (countries.length) {
             // console.log(countries);
             countries.actividades = countries.Activities;
             delete countries.Activities;
