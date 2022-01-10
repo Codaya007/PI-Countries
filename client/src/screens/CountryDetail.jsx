@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { URL_GET_COUNTRY } from "../assets/constants";
 import Activity from "../components/Activity";
 import Bandera from "../components/Bandera";
 import Loading from "../components/Loading";
 import { helpHttp } from "../helpers/helpHttp";
+import Error404 from "./Error404";
 
 const CountryDetail = () => {
   const { id } = useParams();
@@ -18,6 +20,9 @@ const CountryDetail = () => {
 
         setCountry(country.data);
       } catch (err) {
+        toast.warn("No se ha podido encontrar el país solicitado", {
+          autoClose: 2000,
+        });
       } finally {
         setLoading(false);
       }
@@ -30,7 +35,6 @@ const CountryDetail = () => {
     <Loading />
   ) : country ? (
     <div>
-      <Loading />
       <Bandera
         nombre={country.nombre}
         imagen_bandera={country.imagen_bandera}
@@ -65,12 +69,12 @@ const CountryDetail = () => {
             );
           })
         ) : (
-          <div>No hay actividades por mostrar</div>
+          <div>No hay actividades</div>
         )}
       </div>
     </div>
   ) : (
-    <div>Ops! País no encontrado :(</div>
+    <Error404 content={"No se ha podido encontrar el país solicitado"} />
   );
 };
 

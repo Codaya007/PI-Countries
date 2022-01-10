@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import InputForm from "../components/InputForm";
-import Loading from "../components/Loading";
 import Button from "../components/Button";
 import validateForm from "../helpers/validateForm";
 import { TEMPORADAS } from "../assets/constants";
@@ -23,7 +22,7 @@ const initialPaisesForm = {
   ids: [],
 };
 
-const FormActivity = ({ createActivity, countries, loading }) => {
+const FormActivity = ({ createActivity, countries, loadingRequest }) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [paisesForm, setPaisesForm] = useState(initialPaisesForm);
@@ -96,6 +95,8 @@ const FormActivity = ({ createActivity, countries, loading }) => {
         seleccionados: [...paisesForm.seleccionados, paisSeleccionado],
         ids: [...paisesForm.ids, paisSeleccionado.id],
       });
+      paisesForm.seleccionados.length === 1 &&
+        toast.info("Para quitar un país del listado presione su bandera");
     } else {
       setPaisesForm({ ...paisesForm, current: "" });
     }
@@ -107,7 +108,10 @@ const FormActivity = ({ createActivity, countries, loading }) => {
     const countryToDelete = paisesForm.seleccionados.find(
       (pais) => pais.id === name
     );
-
+    countryToDelete &&
+      toast.success(`Se ha quitado ${countryToDelete.nombre}`, {
+        autoClose: 2100,
+      });
     setPaises([...paises, countryToDelete]);
     setPaisesForm({
       ...paisesForm,
@@ -129,6 +133,13 @@ const FormActivity = ({ createActivity, countries, loading }) => {
   useEffect(() => {
     setErrors(validateForm(form));
   }, [form]);
+
+  useEffect(() => {
+    toast.info("Rellene todos los campos para poder enviar", {
+      autoClose: 2000,
+      hideProgressBar: true,
+    });
+  }, []);
 
   return (
     <>
@@ -232,11 +243,20 @@ const FormActivity = ({ createActivity, countries, loading }) => {
           )}
         </div>
 
-        {loading && <Loading />}
-        {Object.keys(errors).length === 0 && !loading && (
+        {Object.keys(errors).length === 0 && !loadingRequest && (
           <Button normal content="Crear actividad" type="submit" />
         )}
-        <input type="button" value="Limpiar campos" onClick={resetForm} />
+        <input
+          type="button"
+          value="Limpiar campos"
+          onClick={() => {
+            resetForm();
+            toast.info("Se han limpiado los campos!", {
+              autoClose: 1600,
+              hideProgressBar: true,
+            });
+          }}
+        />
       </form>
     </>
   );
@@ -245,7 +265,7 @@ const FormActivity = ({ createActivity, countries, loading }) => {
 const mapStateToProps = (state) => {
   return {
     countries: state.countries,
-    loading: state.loading,
+    loadingRequest: state.loading,
   };
 };
 

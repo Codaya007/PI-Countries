@@ -11,6 +11,8 @@ import {
    RESTART_COUNTRIES,
    SORT,
    FILTER_BY_ACTIVITY,
+   PAGINATE_COUNTRIES,
+   CHANGE_PAGE
 } from './types';
 import { toast } from "react-toastify";
 
@@ -163,4 +165,13 @@ export function filterByContinent(continent) {
 
       }
    }
+}
+
+// ACCIÓN DE PAGINACIÓN
+export function paginateCountries() {
+   return { type: PAGINATE_COUNTRIES };
+}
+
+export function changePage(n) {
+   return { type: CHANGE_PAGE, payload: n };
 }

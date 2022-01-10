@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { GET_COUNTRIES, RESTART_COUNTRIES, SET_OPTIONS } from '../actions/types';
+import { CHANGE_PAGE, GET_COUNTRIES, RESTART_COUNTRIES, SET_OPTIONS } from '../actions/types';
 import {
    SORT,
    GET_CONTINENTS,
@@ -8,13 +8,16 @@ import {
    FILTER_BY_ACTIVITY,
    FILTER_BY_CONTINENT,
    SET_LOADING,
+   PAGINATE_COUNTRIES
 } from '../actions/types';
 
 const initialState = {
    countries: [],
    continents: [],
    countriesFiltered: [],
-   loading: null,
+   paginatedCountries: [],
+   currentPage: 1,
+   loading: true,
    options: {
       searchBy: "pais",
       sort: "asc",
@@ -47,14 +50,17 @@ const reducer = (state = initialState, action) => {
             if (state.options.continent !== "Todos") {
                filtered = filtered.filter(pais => pais.continente === state.options.continent)
             }
-            filtered.length === 0 && toast.error('Ningún país coincide con el criterio de búsqueda');
-            return { ...state, countriesFiltered: filtered };
+            filtered.length === 0 && toast.error(`Ningún país de ${state.options.continent} coincide con el criterio de búsqueda`);
+            toast.info(`${filtered.length} países coinciden con su búsqueda`, { autoClose: 1800 });
+            return { ...state, currentPage: 1, countriesFiltered: filtered };
          }
       case RESTART_FILTERS:
          return { ...state, options: initialState.options };
       case RESTART_COUNTRIES:
          return { ...state, countriesFiltered: state.countries };
       // tengo q implementar una ruta en el back para poder filtrar por actividad:
+      case CHANGE_PAGE:
+         return { ...state, currentPage: action.payload || 1 };
       case SORT:
          const { sort, sortBy } = state.options;
          // console.log("Imprimiendo desde reducer sort: ")
@@ -84,6 +90,16 @@ const reducer = (state = initialState, action) => {
                return { ...state, countriesFiltered: filtered };
             }
          }
+      case PAGINATE_COUNTRIES:
+         filtered = [...state.countriesFiltered];
+         let paginatedCountries = [];
+         if (filtered.length > 0) {
+            paginatedCountries.push(filtered.splice(0, 9))
+            while (filtered.length > 0) {
+               paginatedCountries.push(filtered.splice(0, 10))
+            }
+         }
+         return { ...state, paginatedCountries };
       default:
          return { ...state }
    }

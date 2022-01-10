@@ -1,16 +1,18 @@
 import React from "react";
 
 const Activity = ({ nombre, dificultad, temporada, duracion }) => {
+  duracion = duracion.split(" ");
   return (
-    <div>
+    <article>
       <h3>{nombre}</h3>
-      <h4>Duración (min):</h4>
-      <span>{duracion}</span>
-      <h4>Dificultad:</h4>
+      <h4>
+        Del {duracion[0]} al {duracion[1]}
+      </h4>
+      <h4>Dificultad</h4>
       <span>{dificultad}</span>
-      <h4>Temporada:</h4>
+      <h4>Temporada</h4>
       <span>{temporada}</span>
-    </div>
+    </article>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions";
 import Button from "./Button";
@@ -18,7 +19,9 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
     event.preventDefault();
 
     // REALIZO LA BÚSQUEDA
-    if (options.searchBy === "pais" && query) {
+    if (!query) {
+      toast.warn("Primero escriba su consulta");
+    } else if (options.searchBy === "pais") {
       searchByName(query);
     } else {
       // busco por actividad
@@ -27,13 +30,21 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <>
+      <form onSubmit={handleSubmit}>
         <select name={"searchBy"} id={"searchBy"} onChange={handleChange}>
-          <option value={"pais"} key={"pais"}>
+          <option
+            selected={options.searchBy === "pais"}
+            value={"pais"}
+            key={"pais"}
+          >
             {"Por país"}
           </option>
-          <option value={"actividad"} key={"actividad"}>
+          <option
+            selected={options.searchBy === "actividad"}
+            value={"actividad"}
+            key={"actividad"}
+          >
             {"Por actividad"}
           </option>
         </select>
@@ -41,8 +52,8 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
           type="search"
           placeholder={
             options.searchBy === "pais"
-              ? "Qué país desea buscar?"
-              : "Qué actividad desea buscar?"
+              ? "¿Qué país desea buscar?"
+              : "¿Qué actividad desea buscar?"
           }
           name="query"
           id="query"
@@ -50,26 +61,38 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
           onChange={handleChange}
         />
         <Button normal type="submit" content={"Buscar"} />
-      </div>
+      </form>
       <div>
         <select name={"sortBy"} id={"sortBy"} onChange={handleChange}>
-          <option value={"nombre"} key={"nombre"}>
+          <option
+            selected={options.sortBy === "nombre"}
+            value={"nombre"}
+            key={"nombre"}
+          >
             {"Por nombre"}
           </option>
-          <option value={"poblacion"} key={"poblacion"}>
+          <option
+            selected={options.sortBy === "poblacion"}
+            value={"poblacion"}
+            key={"poblacion"}
+          >
             {"Por población"}
           </option>
         </select>
         <select name={"sort"} id={"sort"} onChange={handleChange}>
-          <option value={"asc"} key={"asc"}>
+          <option selected={options.sort === "asc"} value={"asc"} key={"asc"}>
             {"Ascendente"}
           </option>
-          <option value={"desc"} key={"desc"}>
+          <option
+            selected={options.sort === "desc"}
+            value={"desc"}
+            key={"desc"}
+          >
             {"Descendente"}
           </option>
         </select>
       </div>
-    </form>
+    </>
   );
 };
 
