@@ -7,7 +7,7 @@ Content-Type: application/json
       "nombre": "Buceo",
       "descripcion": "Se realizará esta actividad por las fiestas decembrinas",
       "dificultad": "4",
-      "duracion": "12/01/2021 24/01/2021",
+      "duracion": "2.5",
       "temporada": "otoño",
       "paises": ["ecu", "per", "ata"]
 }
