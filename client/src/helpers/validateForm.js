@@ -5,25 +5,29 @@ const validateForm = (form) => {
    const errors = {};
 
    if (!nombre.trim()) {
-      errors.nombre = "El campo 'nombre' es un campo requerido";
+      errors.nombre = "El campo nombre es requerido";
    } else if (nombre.trim().length > 60) {
       errors.nombre = "La extensión máxima de este campo es de 100 caracteres";
    }
 
    if (!dificultad.trim()) {
-      errors.dificultad = "El campo 'dificultad' es un campo requerido";
+      errors.dificultad = "El campo 'dificultad' es requerido";
    } else if (isNaN(parseInt(dificultad))) {
       errors.dificultad = "Tipo de dato inválido! Debe ser un número";
    } else if (dificultad < 1 || dificultad > 5) {
       errors.dificultad = "El nivel de dificultad permitido es de 1 a 5";
    }
 
-   if (!duracion.fecha_inicio || !duracion.fecha_fin) {
-      errors.duracion = "Los campos fecha son requeridos!";
+   if (!duracion) {
+      errors.duracion = "El campo duración es requerido";
+   } else if (isNaN(parseFloat(duracion))) {
+      errors.duracion = "El campo duración debe ser un número";
+   } else if (parseFloat(duracion) < 1 || parseFloat(duracion) > 48) {
+      errors.duracion = "Los valores aceptados son de 1 a 48"
    }
 
    if (!temporada.trim()) {
-      errors.temporada = "El campo 'temporada' es requerido";
+      errors.temporada = "El campo temporada es requerido";
    } else if (!TEMPORADAS.includes(temporada)) {
       errors.temporada =
          "Los valores permitidos para el campo temporada son Invierno, Verano, Primavera y Otoño";

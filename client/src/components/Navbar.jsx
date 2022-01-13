@@ -14,7 +14,7 @@ const Navbar = () => {
       {/* ENLACES */}
       <ul className={styles["nav-links"]}>
         <input type="checkbox" id="checkbox_toggle" />
-        <label for="checkbox_toggle" className={styles["hamburger"]}>
+        <label htmlFor="checkbox_toggle" className={styles["hamburger"]}>
           &#9776;
         </label>
         <div className={styles["menu"]}>

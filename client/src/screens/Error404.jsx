@@ -12,7 +12,6 @@ const Error404 = ({ content }) => {
       <p className={styles.content404}>{content}</p>
       <img
         className={styles.img404}
-        style={{ width: "600px" }}
         src={image404}
         title="Not found:("
         alt="Not Found"

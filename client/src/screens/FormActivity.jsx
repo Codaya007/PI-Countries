@@ -15,7 +15,7 @@ const initialForm = {
   nombre: "",
   descripcion: "",
   dificultad: "1",
-  duracion: { fecha_inicio: "", fecha_fin: "" },
+  duracion: 0,
   temporada: "Verano",
   paises: [],
 };
@@ -35,21 +35,12 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === "fecha_inicio" || name === "fecha_fin") {
-      setForm((prevState) => {
-        return {
-          ...prevState,
-          duracion: { ...prevState.duracion, [name]: value },
-        };
-      });
-    } else {
-      setForm((prevState) => {
-        return {
-          ...prevState,
-          [name]: name === "paises" ? paisesForm.ids : value,
-        };
-      });
-    }
+    setForm((prevState) => {
+      return {
+        ...prevState,
+        [name]: name === "paises" ? paisesForm.ids : value,
+      };
+    });
   };
 
   // Cuando el input pierda el foco de atención, se tienen que validar los campos
@@ -74,7 +65,6 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
       createActivity({
         ...form,
         nombre: form.nombre.trim(),
-        duracion: form.duracion.fecha_inicio + " " + form.duracion.fecha_fin,
         descripcion: form.descripcion.trim(),
       });
       resetForm();
@@ -116,7 +106,7 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
     );
     countryToDelete &&
       toast.success(`Se ha quitado ${countryToDelete.nombre}`, {
-        autoClose: 2100,
+        autoClose: 1800,
       });
     setPaises([...paises, countryToDelete]);
     setPaisesForm({
@@ -199,29 +189,17 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
           />
         )}
         <div className={stylesInputs["input-container"]}>
-          <p className={stylesInputs["label-form"]}>Fechas:</p>
-          <div className={styles["fechas-container"]}>
-            <label>Inicio</label>
-            <input
-              className={stylesInputs["input-form"]}
-              type={"date"}
-              value={form.duracion.fecha_inicio}
-              name="fecha_inicio"
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </div>
-          <div className={styles["fechas-container"]}>
-            <label>Fin</label>
-            <input
-              className={stylesInputs["input-form"]}
-              type={"date"}
-              value={form.duracion.fecha_fin}
-              name="fecha_fin"
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </div>
+          <label className={stylesInputs["label-form"]}>
+            Duración en horas:
+          </label>
+          <input
+            className={stylesInputs["input-form"]}
+            type={"number"}
+            value={form.duracion}
+            name="duracion"
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
         </div>
         {errors.duracion && (
           <Message className={styles["error-form"]} content={errors.duracion} />

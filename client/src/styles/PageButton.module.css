@@ -1,10 +1,34 @@
-.page {
+.active-page,
+.page,
+.previous,
+.next {
   border-radius: 10px;
   border: none;
-  width: 35px;
-  height: 25px;
+  width: 38px;
+  height: 30px;
   margin: 0 0.35rem;
-  background-color: #473d8a;
+  background-color: #473d8abe;
   color: white;
   cursor: pointer;
+}
+
+.active-page {
+  background-color: rgb(71, 61, 139);
+  border: 1px solid black;
+}
+
+.previous {
+  color: transparent;
+  width: 40px;
+  background: #473d8abe url(../assets/images/anterior.svg) no-repeat 70% center;
+  background-size: 25px;
+  padding: 5px 8px;
+}
+
+.next {
+  color: transparent;
+  width: 40px;
+  background: #473d8abe url(../assets/images/siguiente.svg) no-repeat 80% center;
+  background-size: 25px;
+  padding: 5px 8px;
 }

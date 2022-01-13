@@ -1,7 +1,7 @@
 /* PAGE 404 */
 .container-404 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 35% 60%;
   grid-template-rows: 100px 50px 100px 1fr;
   grid-template-areas:
     "title image"
@@ -31,4 +31,22 @@
 
 .img404 {
   grid-area: image;
+  width: 690px;
+}
+
+@media screen and (max-width: 900px) {
+  .container-404 {
+    grid-template-columns: 95%;
+    grid-template-rows: 120px 50px 60px 1fr;
+    grid-template-areas:
+      "title"
+      "subtitle"
+      "content"
+      "btn"
+      "image";
+  }
+
+  .img404 {
+    width: 100%;
+  }
 }

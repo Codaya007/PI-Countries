@@ -34,7 +34,9 @@ const CountryDetail = () => {
   }, [id]);
 
   return loading ? (
-    <Loading />
+    <div>
+      <Loading />
+    </div>
   ) : country ? (
     <>
       <h2 className={styles["title-detail"]}>Información del país</h2>
@@ -57,7 +59,9 @@ const CountryDetail = () => {
           <h3>Subregión: </h3>
           <p>{country.subregion}</p>
           <h3>Área: </h3>
-          <p>{country.area}</p>
+          <p>
+            {country.area} Km<sup>2</sup>
+          </p>
           <h3>Población: </h3>
           <p>{country.poblacion} habitantes</p>
         </div>
@@ -68,12 +72,13 @@ const CountryDetail = () => {
       <div>
         {country.actividades.length > 0 ? (
           country.actividades.map((actividad) => {
-            const { nombre, descripcion, duracion, dificultad, temporada, id } = actividad;
+            const { nombre, descripcion, duracion, dificultad, temporada, id } =
+              actividad;
             return (
               <Activity
                 key={id}
                 nombre={nombre}
-                descripcion = {descripcion}
+                descripcion={descripcion}
                 duracion={duracion}
                 dificultad={dificultad}
                 temporada={temporada}

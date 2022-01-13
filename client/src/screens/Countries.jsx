@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Continent from "../components/Continent";
 import Country from "../components/Country";
 import Searcher from "../components/Searcher";
@@ -9,6 +9,7 @@ import { bindActionCreators } from "redux";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 import styles from "../styles/CountriesPage.module.css";
+import stylesPage from "../styles/PageButton.module.css";
 
 const Countries = ({
   continents,
@@ -21,9 +22,23 @@ const Countries = ({
   currentPage,
   changePage,
 }) => {
+  const [currentPagesInterval, setCurrentPagesInterval] = useState({
+    start: 0,
+    end: 0,
+  });
+
   useEffect(() => {
     sort();
   }, [options.sort, options.sortBy, sort]);
+
+  useEffect(() => {
+    paginatedCountries.length > 5
+      ? setCurrentPagesInterval({
+          start: 0,
+          end: 4,
+        })
+      : setCurrentPagesInterval({ start: 0, end: 0 });
+  }, [paginatedCountries]);
 
   return (
     <div className={styles["countries-page-container"]}>
@@ -69,15 +84,49 @@ const Countries = ({
         ))}
       {!loading && paginatedCountries.length > 1 && (
         <div className={styles["pagination-container"]}>
-          {paginatedCountries.map((group, index) => {
-            return (
-              <PageButton
-                key={`Group${index}`}
-                content={index + 1}
-                handleClick={() => changePage(index + 1)}
-              />
-            );
-          })}
+          {paginatedCountries.length > 5 && currentPagesInterval.start >= 1 && (
+            <button
+              className={stylesPage.previous}
+              onClick={() =>
+                setCurrentPagesInterval({
+                  start: currentPagesInterval.start - 1,
+                  end: currentPagesInterval.end - 1,
+                })
+              }
+            >
+              "-"
+            </button>
+          )}
+          {paginatedCountries
+            .slice(currentPagesInterval.start, currentPagesInterval.start + 5)
+            .map((group, index) => {
+              return (
+                <PageButton
+                  active={
+                    currentPage === currentPagesInterval.start + index + 1
+                  }
+                  key={`Group${index}`}
+                  content={currentPagesInterval.start + index + 1}
+                  handleClick={() =>
+                    changePage(currentPagesInterval.start + index + 1)
+                  }
+                />
+              );
+            })}
+          {paginatedCountries.length > 5 &&
+            currentPagesInterval.end + 1 < paginatedCountries.length && (
+              <button
+                className={stylesPage.next}
+                onClick={() =>
+                  setCurrentPagesInterval({
+                    start: currentPagesInterval.start + 1,
+                    end: currentPagesInterval.end + 1,
+                  })
+                }
+              >
+                "-"
+              </button>
+            )}
         </div>
       )}
     </div>
