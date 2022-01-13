@@ -7,6 +7,10 @@ module.exports = (Sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
          },
+         descripcion: {
+            type: DataTypes.STRING,
+            allowNull: false,
+         },
          dificultad: {
             type: DataTypes.INTEGER,
             validate: {

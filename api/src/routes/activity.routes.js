@@ -19,7 +19,7 @@ router.get('/', getAllActivities, (req, res, next) => {
 router.post('/',
    [
       check('nombre', 'El campo nombre es requerido').trim().isString().notEmpty(),
-      check('nombre', 'El campo nombre no puede estar vacío').trim().notEmpty(),
+      check('descripcion', 'El campo descripcion es requerido').trim().notEmpty(),
       check('dificultad', 'Debe ser un numero entre 1 y 5').isNumeric({ min: 1, max: 5 }).optional(),
       check('dificultad', 'Debe ser un numero entero').custom((value) => value % 1 === 0).optional(),
       check('duracion', 'Debe ser un string con dos fechas separadas por un espacio').trim().isString().custom(date => {
@@ -38,10 +38,11 @@ router.post('/',
          errors
       });
 
-      let { nombre, dificultad, duracion, temporada, paises = [] } = req.body;
+      let { nombre, descripcion, dificultad, duracion, temporada, paises = [] } = req.body;
 
       const newActivity = {
          nombre,
+         descripcion: descripcion.trim(),
          dificultad: dificultad.trim(),
          duracion,
          temporada: capitalize(temporada)
@@ -80,7 +81,7 @@ router.post('/',
 
          res.status(201).end();
       } catch (err) {
-         // console.log(err);
+         console.log(err);
          next({});
       }
 
