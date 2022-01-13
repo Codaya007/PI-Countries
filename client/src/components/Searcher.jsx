@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions";
 import Button from "./Button";
+import styles from "../styles/Searcher.module.css";
 
 const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
   // un estado local para controlar el valor de la consulta
@@ -31,39 +32,55 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <select name={"searchBy"} id={"searchBy"} onChange={handleChange}>
+      <form className={styles.searcher} onSubmit={handleSubmit}>
+        <select
+          className={styles.searchBy}
+          name={"searchBy"}
+          id={"searchBy"}
+          onChange={handleChange}
+        >
           <option
             selected={options.searchBy === "pais"}
             value={"pais"}
             key={"pais"}
           >
-            {"Por país"}
+            {"País"}
           </option>
           <option
             selected={options.searchBy === "actividad"}
             value={"actividad"}
             key={"actividad"}
           >
-            {"Por actividad"}
+            {"Actividad"}
           </option>
         </select>
         <input
+          className={styles["input-search"]}
           type="search"
           placeholder={
             options.searchBy === "pais"
-              ? "¿Qué país desea buscar?"
-              : "¿Qué actividad desea buscar?"
+              ? "Buscar país..."
+              : "Buscar actividad..."
           }
           name="query"
           id="query"
           value={query}
           onChange={handleChange}
         />
-        <Button normal type="submit" content={"Buscar"} />
+        <Button
+          className={styles["btn-search"]}
+          normal
+          type="submit"
+          content={"B"}
+        />
       </form>
-      <div>
-        <select name={"sortBy"} id={"sortBy"} onChange={handleChange}>
+      <div className={styles.filters}>
+        <select
+          className={styles.sortBy}
+          name={"sortBy"}
+          id={"sortBy"}
+          onChange={handleChange}
+        >
           <option
             selected={options.sortBy === "nombre"}
             value={"nombre"}
@@ -79,7 +96,12 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
             {"Por población"}
           </option>
         </select>
-        <select name={"sort"} id={"sort"} onChange={handleChange}>
+        <select
+          className={styles.sort}
+          name={"sort"}
+          id={"sort"}
+          onChange={handleChange}
+        >
           <option selected={options.sort === "asc"} value={"asc"} key={"asc"}>
             {"Ascendente"}
           </option>

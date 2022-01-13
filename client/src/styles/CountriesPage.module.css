@@ -1,0 +1,45 @@
+/* COUNTRIES PAGE*/
+.countries-page-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 95px 40px 1fr;
+  grid-template-areas:
+    ". searcher"
+    "filters pagination"
+    "continents countries";
+  justify-items: center;
+  align-items: center;
+}
+
+.continents-container {
+  grid-area: continents;
+  align-self: stretch;
+}
+
+.continents-title {
+  font-size: 1.3rem;
+  padding-left: 2rem;
+  text-align: left;
+  color: #473d8a;
+}
+
+.countries-container {
+  grid-area: countries;
+  align-self: stretch;
+}
+
+.pagination-container {
+  grid-area: pagination;
+}
+@media screen and (max-width: 850px) {
+  .countries-page-container {
+    grid-template-columns: 100%;
+    grid-template-rows: 90px min-content 40px auto 50px;
+    grid-template-areas:
+      "searcher"
+      "continents"
+      "filters"
+      "countries"
+      "pagination";
+  }
+}

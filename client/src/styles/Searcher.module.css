@@ -1,0 +1,55 @@
+.filters {
+  grid-area: filters;
+}
+
+.searcher {
+  grid-area: searcher;
+}
+
+.searcher .searchBy,
+.btn-search,
+.filters .sortBy,
+.filters .sort {
+  background-color: #473d8a;
+  height: 40px;
+  padding: 5px 8px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.searcher .searchBy,
+.filters .sortBy {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.btn-search,
+.filters .sort {
+  border-radius: 0 1rem 1rem 0;
+}
+
+.btn-search {
+  color: transparent;
+  width: 40px;
+  background: #473d8a url(../assets/images/lupa.svg) no-repeat 98% center;
+  background-size: 35px;
+}
+
+.input-search {
+  width: 250px;
+  height: 40px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+@media screen and (max-width: 450px) {
+  .input-search {
+    width: 155px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .input-search {
+    width: 400px;
+  }
+}

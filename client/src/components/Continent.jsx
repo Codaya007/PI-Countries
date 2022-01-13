@@ -1,24 +1,23 @@
 import React from "react";
+import styles from "../styles/Continent.module.css";
 
 const Continent = ({ nombre, imagen, handleClick, active }) => {
   return (
     <div
-      style={{
-        display: "inline-block",
-        cursor: "pointer",
-        backgroundColor: `${active ? "#C5EADB" : "#F1F9F6"}`,
-        borderRadius: "20px",
-        margin: "1rem",
-      }}
+      className={
+        active
+          ? `${styles["continent-container"]} ${styles["continent-active"]}`
+          : styles["continent-container"]
+      }
       onClick={handleClick}
     >
       <img
-        style={{ width: "160px" }}
+        className={styles["continent-image"]}
         src={imagen}
         alt={nombre}
         title={nombre === "Todos" ? "Todos los países" : `Países de ${nombre}`}
       />
-      <h3>{nombre}</h3>
+      <h3 className={styles["continent-title"]}>{nombre}</h3>
     </div>
   );
 };

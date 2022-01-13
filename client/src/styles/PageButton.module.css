@@ -1,0 +1,10 @@
+.page {
+  border-radius: 10px;
+  border: none;
+  width: 35px;
+  height: 25px;
+  margin: 0 0.35rem;
+  background-color: #473d8a;
+  color: white;
+  cursor: pointer;
+}

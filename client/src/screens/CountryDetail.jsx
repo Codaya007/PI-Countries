@@ -5,8 +5,10 @@ import { URL_GET_COUNTRY } from "../assets/constants";
 import Activity from "../components/Activity";
 import Bandera from "../components/Bandera";
 import Loading from "../components/Loading";
+import Message from "../components/Message";
 import { helpHttp } from "../helpers/helpHttp";
 import Error404 from "./Error404";
+import styles from "../styles/CountryDetailPage.module.css";
 
 const CountryDetail = () => {
   const { id } = useParams();
@@ -34,34 +36,44 @@ const CountryDetail = () => {
   return loading ? (
     <Loading />
   ) : country ? (
-    <div>
-      <Bandera
-        nombre={country.nombre}
-        imagen_bandera={country.imagen_bandera}
-        id={id}
-      />
-      <h1>
-        {country.nombre} {id}
-      </h1>
-      <h3>Continente: </h3>
-      <p>{country.continente}</p>
-      <h3>Capital: </h3>
-      <p>{country.capital}</p>
-      <h3>Subregión: </h3>
-      <p>{country.subregion}</p>
-      <h3>Área: </h3>
-      <p>{country.area}</p>
-      <h3>Población: </h3>
-      <p>{country.poblacion}</p>
-      <h3>Actividades que se pueden realizar: </h3>
+    <>
+      <h2 className={styles["title-detail"]}>Información del país</h2>
+      <div className={styles["country-detail-container"]}>
+        <div className={styles["country-detail-flag"]}>
+          <Bandera
+            nombre={country.nombre}
+            imagen_bandera={country.imagen_bandera}
+            id={id}
+          />
+        </div>
+        <h1 className={styles["country-detail-title"]}>
+          {country.nombre} {id}
+        </h1>
+        <div className={styles["country-detail-content"]}>
+          <h3>Continente: </h3>
+          <p>{country.continente}</p>
+          <h3>Capital: </h3>
+          <p>{country.capital}</p>
+          <h3>Subregión: </h3>
+          <p>{country.subregion}</p>
+          <h3>Área: </h3>
+          <p>{country.area}</p>
+          <h3>Población: </h3>
+          <p>{country.poblacion} habitantes</p>
+        </div>
+      </div>
+      <h2 className={styles["title-detail"]}>
+        Actividades que se pueden realizar:{" "}
+      </h2>
       <div>
         {country.actividades.length > 0 ? (
           country.actividades.map((actividad) => {
-            const { nombre, duracion, dificultad, temporada, id } = actividad;
+            const { nombre, descripcion, duracion, dificultad, temporada, id } = actividad;
             return (
               <Activity
                 key={id}
                 nombre={nombre}
+                descripcion = {descripcion}
                 duracion={duracion}
                 dificultad={dificultad}
                 temporada={temporada}
@@ -69,10 +81,10 @@ const CountryDetail = () => {
             );
           })
         ) : (
-          <div>No hay actividades</div>
+          <Message content={"No hay actividades por mostrar"} />
         )}
       </div>
-    </div>
+    </>
   ) : (
     <Error404 content={"No se ha podido encontrar el país solicitado"} />
   );

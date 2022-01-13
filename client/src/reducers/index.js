@@ -50,8 +50,8 @@ const reducer = (state = initialState, action) => {
             if (state.options.continent !== "Todos") {
                filtered = filtered.filter(pais => pais.continente === state.options.continent)
             }
-            filtered.length === 0 && toast.error(`Ningún país de ${state.options.continent} coincide con el criterio de búsqueda`);
-            toast.info(`${filtered.length} países coinciden con su búsqueda`, { autoClose: 1800 });
+            filtered.length === 0 ? toast.error(`Ningún país de ${state.options.continent} coincide con el criterio de búsqueda`) :
+               toast.info(`${filtered.length} países coinciden con su búsqueda`, { autoClose: 1800 });
             return { ...state, currentPage: 1, countriesFiltered: filtered };
          }
       case RESTART_FILTERS:

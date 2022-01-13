@@ -1,0 +1,35 @@
+.label-form {
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  color: darkslateblue;
+}
+
+.input-country,
+.input-form {
+  height: 30px;
+  width: 75%;
+  border-radius: 10px;
+  margin: 5px 0;
+  background-color: rgba(71, 61, 139, 0.308);
+  border: none;
+}
+
+.input-country {
+  border-radius: 10px 0 0 10px;
+  width: 60%;
+  display: inline-block;
+}
+
+.btn-add-country {
+  display: inline-block;
+  height: 32px;
+  background-color: darkslateblue;
+  color: white;
+  border-radius: 0 10px 10px 0;
+}
+
+.input-container {
+  width: 90%;
+  margin: 0.5rem auto;
+}

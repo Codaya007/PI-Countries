@@ -1,0 +1,83 @@
+/* FORM PAGE */
+.form-container {
+  width: 500px;
+  margin: 2rem auto;
+  background-color: rgba(255, 255, 255, 0.397);
+  border: none;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+  /* display: flex; */
+}
+
+/* === validation styles === */
+.error-form {
+  color: #c71818;
+  font-size: 14px;
+  padding: 0 2rem;
+  text-align: right;
+}
+
+.bandera {
+  position: relative;
+  border-radius: 50%;
+  display: inline-block;
+  height: 75px;
+  width: 75px;
+  object-fit: cover;
+  margin: 0.5rem;
+}
+
+.subtitle-form,
+.title-form {
+  font-size: 30px;
+  color: darkslateblue;
+  padding-bottom: 1rem;
+}
+
+.subtitle-form {
+  font-size: 15px;
+}
+
+.btns-form {
+  display: flex;
+  margin: 3rem 0;
+  justify-content: space-evenly;
+}
+
+.fechas-container {
+  width: 70%;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.selected-countries-title {
+  font-size: 20px;
+  color: darkslateblue;
+  padding-bottom: 1rem;
+  font-weight: bold;
+}
+
+.textarea-form {
+  height: 70px;
+  width: 80%;
+  border-radius: 10px;
+  margin: 5px 0;
+  background-color: rgba(71, 61, 139, 0.308);
+  border: none;
+  resize: none;
+}
+
+@media screen and (max-width: 605px) {
+  .form-container {
+    width: 80%;
+    margin: 1rem auto;
+  }
+
+  .error-form {
+    font-size: 12px;
+    text-align: center;
+  }
+}

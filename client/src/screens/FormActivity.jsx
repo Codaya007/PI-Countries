@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import InputForm from "../components/InputForm";
-import Button from "../components/Button";
 import validateForm from "../helpers/validateForm";
 import { TEMPORADAS } from "../assets/constants";
 import { connect } from "react-redux";
 import { createActivity } from "../actions";
 import { toast } from "react-toastify";
+import styles from "../styles/FormActivity.module.css";
+import stylesButton from "../styles/Button.module.css";
+import stylesInputs from "../styles/Input.module.css";
+import Message from "../components/Message";
 
 // INICIALIZACIONES DE ESTADO
 const initialForm = {
   nombre: "",
+  descripcion: "",
   dificultad: "1",
   duracion: { fecha_inicio: "", fecha_fin: "" },
   temporada: "Verano",
@@ -69,7 +73,9 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
     if (Object.keys(errors).length === 0) {
       createActivity({
         ...form,
+        nombre: form.nombre.trim(),
         duracion: form.duracion.fecha_inicio + " " + form.duracion.fecha_fin,
+        descripcion: form.descripcion.trim(),
       });
       resetForm();
     } else {
@@ -136,15 +142,15 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
 
   useEffect(() => {
     toast.info("Rellene todos los campos para poder enviar", {
-      autoClose: 2000,
+      autoClose: 1700,
       hideProgressBar: true,
     });
   }, []);
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <h1>Crear nueva actividad:</h1>
+    <div className={styles["form-container"]}>
+      <form className={styles["inputs-form"]} onSubmit={handleSubmit}>
+        <h1 className={styles["title-form"]}>Crear nueva actividad:</h1>
         <InputForm
           title="Nombre de la actividad:"
           type="text"
@@ -153,38 +159,73 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
           handleChange={handleChange}
           handleBlur={handleBlur}
         />
-        {errors.nombre && <span>{errors.nombre}</span>}
+        {errors.nombre && (
+          <Message className={styles["error-form"]} content={errors.nombre} />
+        )}
+        <div className={stylesInputs["input-container"]}>
+          <label className={stylesInputs["label-form"]}>
+            Breve descripción:
+          </label>
+          <textarea
+            className={styles["textarea-form"]}
+            name="descripcion"
+            value={form.descripcion}
+            cols="40"
+            rows="3"
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
+        </div>
+        {errors.descripcion && (
+          <Message
+            className={styles["error-form"]}
+            content={errors.descripcion}
+          />
+        )}
         <InputForm
           title="Dificultad:"
           type="range"
-          min={1}
+          min={0}
           max={5}
           name="dificultad"
           value={form.dificultad}
           handleChange={handleChange}
           handleBlur={handleBlur}
         />
-        {errors.dificultad && <span>{errors.dificultad}</span>}
-        <div>
-          <label>Fechas:</label>
-          <label>Inicio</label>
-          <input
-            type={"date"}
-            value={form.duracion.fecha_inicio}
-            name="fecha_inicio"
-            onChange={handleChange}
-            onBlur={handleBlur}
+        {errors.dificultad && (
+          <Message
+            className={styles["error-form"]}
+            content={errors.dificultad}
           />
-          <label>Fin</label>
-          <input
-            type={"date"}
-            value={form.duracion.fecha_fin}
-            name="fecha_fin"
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+        )}
+        <div className={stylesInputs["input-container"]}>
+          <p className={stylesInputs["label-form"]}>Fechas:</p>
+          <div className={styles["fechas-container"]}>
+            <label>Inicio</label>
+            <input
+              className={stylesInputs["input-form"]}
+              type={"date"}
+              value={form.duracion.fecha_inicio}
+              name="fecha_inicio"
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </div>
+          <div className={styles["fechas-container"]}>
+            <label>Fin</label>
+            <input
+              className={stylesInputs["input-form"]}
+              type={"date"}
+              value={form.duracion.fecha_fin}
+              name="fecha_fin"
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </div>
         </div>
-        {errors.duracion && <span>{errors.duracion}</span>}
+        {errors.duracion && (
+          <Message className={styles["error-form"]} content={errors.duracion} />
+        )}
         <InputForm
           select
           title="Temporada propicia para realizar la actividad:"
@@ -193,30 +234,64 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
           handleChange={handleChange}
           handleBlur={handleBlur}
         />
-        {errors.temporada && <span>{errors.temporada}</span>}
+        {errors.temporada && (
+          <Message
+            className={styles["error-form"]}
+            content={errors.temporada}
+          />
+        )}
 
         {/* PAISES DONDE SE PRACTICA LA ACTIVIDAD */}
 
-        <label>
-          Seleccione los países donde puede practicar esta actividad:
-        </label>
-        <input
-          type="text"
-          list="paises"
-          value={paisesForm.current}
-          name="current"
-          onChange={(e) =>
-            setPaisesForm({ ...paisesForm, current: e.target.value })
-          }
-        />
-        <input
-          type="button"
-          value={"Añadir país"}
-          name="paises"
-          onClick={handleClickBandera}
-        />
-        {errors.paises && <span>{errors.paises}</span>}
+        <div className={stylesInputs["input-container"]}>
+          <label className={stylesInputs["label-form"]}>
+            Seleccione los países donde puede practicar esta actividad:
+          </label>
+          <input
+            className={stylesInputs["input-country"]}
+            type="text"
+            list="paises"
+            value={paisesForm.current}
+            name="current"
+            onChange={(e) =>
+              setPaisesForm({ ...paisesForm, current: e.target.value })
+            }
+          />
+          <input
+            className={stylesInputs["btn-add-country"]}
+            type="button"
+            value={"Añadir país"}
+            name="paises"
+            onClick={handleClickBandera}
+          />
+        </div>
+        {errors.paises && (
+          <Message className={styles["error-form"]} content={errors.paises} />
+        )}
 
+        <div className={styles["btns-form"]}>
+          <input
+            className={stylesButton["button-secondary"]}
+            type="button"
+            value="Limpiar campos"
+            onClick={() => {
+              resetForm();
+              toast.info("Se han limpiado los campos!", {
+                autoClose: 1500,
+                hideProgressBar: true,
+              });
+            }}
+          />
+          {Object.keys(errors).length === 0 && !loadingRequest && (
+            <input
+              className={stylesButton["button-primary"]}
+              type="submit"
+              value="Crear actividad"
+            />
+          )}
+        </div>
+      </form>
+      <div>
         {/* MUESTRO LOS PAISES QUE HE SELECCIONADO */}
         <datalist id="paises">
           {paises.map((pais) => (
@@ -225,11 +300,14 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
             </option>
           ))}
         </datalist>
-        <p>Paises donde se practica la actividad:</p>
+        <p className={styles["selected-countries-title"]}>
+          Paises seleccionados:
+        </p>
         <div>
           {paisesForm.seleccionados.length ? (
             paisesForm.seleccionados.map((pais) => (
               <img
+                className={styles.bandera}
                 key={pais.id}
                 src={pais.imagen_bandera}
                 alt={pais.nombre}
@@ -239,26 +317,11 @@ const FormActivity = ({ createActivity, countries, loadingRequest }) => {
               />
             ))
           ) : (
-            <span>Aún no ha seleccionado ningún país</span>
+            <Message content={"Aún no ha seleccionado ningún país"} />
           )}
         </div>
-
-        {Object.keys(errors).length === 0 && !loadingRequest && (
-          <Button normal content="Crear actividad" type="submit" />
-        )}
-        <input
-          type="button"
-          value="Limpiar campos"
-          onClick={() => {
-            resetForm();
-            toast.info("Se han limpiado los campos!", {
-              autoClose: 1600,
-              hideProgressBar: true,
-            });
-          }}
-        />
-      </form>
-    </>
+      </div>
+    </div>
   );
 };
 

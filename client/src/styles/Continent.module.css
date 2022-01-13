@@ -1,0 +1,61 @@
+/* CONTINENT COMPONENT */
+.continent-container {
+  display: block;
+  cursor: pointer;
+  border-radius: 35px;
+}
+
+.continent-image {
+  height: 125px;
+  width: auto;
+  padding: 4px;
+  margin: 0px;
+}
+
+.continent-title {
+  margin: 0;
+  padding-bottom: 0.5rem;
+}
+
+.continent-active {
+  background-color: #c957dabd;
+}
+
+@media screen and (max-width: 850px) {
+  .continent-container {
+    display: inline-block;
+  }
+
+  .continent-image {
+    height: 110px;
+    padding: 2px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .continent-image {
+    display: none;
+  }
+
+  .continent-container {
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: rgba(71, 61, 139, 0.521);
+    height: 40px;
+    padding: 0 6px;
+    margin: 5px;
+    display: inline-flex;
+  }
+
+  .continent-active {
+    background-color: darkslateblue;
+  }
+
+  .continent-title {
+    text-align: center;
+    color: white;
+    font-weight: normal;
+    padding: 0;
+    margin: auto auto;
+  }
+}

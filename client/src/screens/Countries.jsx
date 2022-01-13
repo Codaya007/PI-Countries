@@ -8,6 +8,7 @@ import * as actionCreators from "../actions";
 import { bindActionCreators } from "redux";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
+import styles from "../styles/CountriesPage.module.css";
 
 const Countries = ({
   continents,
@@ -25,11 +26,11 @@ const Countries = ({
   }, [options.sort, options.sortBy, sort]);
 
   return (
-    <div>
-      <h1>Países del Mundo</h1>
+    <div className={styles["countries-page-container"]}>
       <Searcher />
       {continents.length > 0 && (
-        <div>
+        <div className={styles["continents-container"]}>
+          <h3 className={styles["continents-title"]}>Continentes</h3>
           {continents.map((continent) => (
             <Continent
               active={options.continent === continent.nombre}
@@ -44,10 +45,10 @@ const Countries = ({
           ))}
         </div>
       )}
-      {loading && <Loading />}
+      {loading && <Loading className={styles["countries-container"]} />}
       {!loading &&
         (paginatedCountries.length > 0 ? (
-          <div>
+          <div className={styles["countries-container"]}>
             {paginatedCountries[currentPage - 1].map((country) => {
               return (
                 <Country
@@ -61,19 +62,24 @@ const Countries = ({
             })}
           </div>
         ) : (
-          <Message content={"No se encontró ninguna coincidencia"} />
+          <Message
+            className={styles["countries-container"]}
+            content={"No se encontró ninguna coincidencia"}
+          />
         ))}
-      {!loading &&
-        paginatedCountries.length > 1 &&
-        paginatedCountries.map((group, index) => {
-          return (
-            <PageButton
-              key={`Group${index}`}
-              content={index + 1}
-              handleClick={() => changePage(index + 1)}
-            />
-          );
-        })}
+      {!loading && paginatedCountries.length > 1 && (
+        <div className={styles["pagination-container"]}>
+          {paginatedCountries.map((group, index) => {
+            return (
+              <PageButton
+                key={`Group${index}`}
+                content={index + 1}
+                handleClick={() => changePage(index + 1)}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

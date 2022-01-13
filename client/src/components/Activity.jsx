@@ -1,17 +1,35 @@
 import React from "react";
+import style from "../styles/Activity.module.css";
 
-const Activity = ({ nombre, dificultad, temporada, duracion }) => {
+const Activity = ({ nombre, dificultad, temporada, duracion, descripcion }) => {
   duracion = duracion.split(" ");
+  dificultad = parseInt(dificultad) * 20;
+
   return (
-    <article>
-      <h3>{nombre}</h3>
-      <h4>
-        Del {duracion[0]} al {duracion[1]}
-      </h4>
-      <h4>Dificultad</h4>
-      <span>{dificultad}</span>
-      <h4>Temporada</h4>
-      <span>{temporada}</span>
+    <article className={style["activity-container"]}>
+      <h3 className={style["activity-name"]}>{nombre}</h3>
+      <p className={style["descripcion-actividad"]}>{descripcion.trim()}</p>
+      <div className={style["duracion-actividad"]}>
+        <h4 className={style["subtitulo-actividad"]}>Fechas</h4>
+        <p>
+          Del {duracion[0]} al {duracion[1]}
+        </p>
+      </div>
+      <div className={style["dificultad-actividad"]}>
+        <div className={style.contenedor}>
+          <div className={`${style.progreso} ${style["pro-1"]}`}>
+            <div
+              className={`${style.circle} ${style[`circle${dificultad}`]}`}
+            ></div>
+            <h1>{dificultad}%</h1>
+          </div>
+        </div>
+        <h4 className={style["subtitulo-actividad"]}>Dificultad</h4>
+      </div>
+      <div className={style["temporada-actividad"]}>
+        <span>{temporada}</span>
+        <h4 className={style["subtitulo-actividad"]}>Temporada</h4>
+      </div>
     </article>
   );
 };

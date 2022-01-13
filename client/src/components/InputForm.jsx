@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../styles/Input.module.css";
 
 const InputForm = ({
   select,
@@ -12,11 +13,12 @@ const InputForm = ({
   min = 0,
   max = 100,
 }) => {
-  if (select) {
-    return (
-      <>
-        <label>{title}</label>
+  return (
+    <div className={styles["input-container"]}>
+      <label className={styles["label-form"]}>{title}</label>
+      {select ? (
         <select
+          className={styles["input-form"]}
           name={name}
           id={name}
           onChange={handleChange}
@@ -29,13 +31,9 @@ const InputForm = ({
               </option>
             ))}
         </select>
-      </>
-    );
-  } else {
-    return (
-      <div>
-        <label>{title}</label>
+      ) : (
         <input
+          className={styles["input-form"]}
           type={type}
           value={value}
           onChange={handleChange}
@@ -44,9 +42,9 @@ const InputForm = ({
           min={type === "range" ? min : null}
           max={type === "range" ? max : null}
         />
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 };
 
 export default InputForm;

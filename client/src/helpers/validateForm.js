@@ -1,12 +1,12 @@
 import { TEMPORADAS } from "../assets/constants";
 
 const validateForm = (form) => {
-   const { nombre, dificultad, duracion, temporada, paises } = form;
+   const { nombre, dificultad, duracion, temporada, paises, descripcion } = form;
    const errors = {};
 
    if (!nombre.trim()) {
       errors.nombre = "El campo 'nombre' es un campo requerido";
-   } else if (nombre.trim().length > 100) {
+   } else if (nombre.trim().length > 60) {
       errors.nombre = "La extensión máxima de este campo es de 100 caracteres";
    }
 
@@ -23,10 +23,16 @@ const validateForm = (form) => {
    }
 
    if (!temporada.trim()) {
-      errors.temporada = "El campo 'temporada' es un campo requerido";
+      errors.temporada = "El campo 'temporada' es requerido";
    } else if (!TEMPORADAS.includes(temporada)) {
       errors.temporada =
          "Los valores permitidos para el campo temporada son Invierno, Verano, Primavera y Otoño";
+   }
+
+   if (!descripcion.trim()) {
+      errors.descripcion = "El campo 'descripción' es requerido";
+   } else if (descripcion.trim().length > 210) {
+      errors.descripcion = "La descripción tiene un límite de 210 caracteres.";
    }
 
    if (paises.length === 0) {
