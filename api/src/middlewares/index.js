@@ -7,4 +7,5 @@ module.exports = {
    getAllContinents: require('./getAllContinents'),
    getCountriesByContinent: require('./getCountriesByContinent'),
    getCountriesByActivity: require('./getCountriesByActivity'),
+   validateActivity: require('./validateActivity'),
 }

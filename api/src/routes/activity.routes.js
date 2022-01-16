@@ -1,8 +1,7 @@
 const { Router } = require('express');
 const { Activity } = require('../db');
 const { getCountryById, capitalize } = require('../helpers');
-const { getAllActivities } = require('../middlewares');
-const { check, validationResult } = require('express-validator');
+const { getAllActivities, validateActivity } = require('../middlewares');
 
 const router = Router();
 
@@ -16,22 +15,11 @@ router.get('/', getAllActivities, (req, res, next) => {
 // @route POST /activities
 // @desc Create a new activity
 // @access Public
-router.post('/',
-   [
-      check('nombre', 'El campo nombre es requerido').trim().isString().notEmpty(),
-      check('descripcion', 'El campo descripcion es requerido').trim().notEmpty(),
-      check('dificultad', 'Debe ser un numero entre 1 y 5').isNumeric({ min: 1, max: 5 }).optional(),
-      check('dificultad', 'Debe ser un numero entero').custom((value) => value % 1 === 0).optional(),
-      check('duracion', 'Debe ser un número entre 1 y 48 correspondiente a las horas de duración').isNumeric({min: 1, max: 48}).optional
-         (),
-      check('temporada', 'Debe ser un valor valido: invierno, verano, primavera, otoño').trim().isString().custom((str) => {
-         return ['Invierno', 'Verano', 'Primavera', 'Otoño'].includes(capitalize(str));
-      }).optional(),
-      check('paises', 'Debe ser un array con los ids de paises validos').isArray().optional()
-   ],
+router.post('/', validateActivity,
    async (req, res, next) => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) return next({
+      const { errors } = req;
+
+      if (errors) return next({
          message: 'Ha fallado la validación',
          errors
       });
