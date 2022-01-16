@@ -79,8 +79,8 @@ const FormActivity = ({
       resetForm();
     } else {
       addNotification({
-        description: "El formulario contiene errrores",
-        type: "error",
+        description: "Asegurese de llenar el formulario correctamente",
+        type: "warning",
       });
       return;
     }
@@ -98,16 +98,18 @@ const FormActivity = ({
     setPaises(paises.filter((pais) => pais.nombre !== paisesForm.current));
 
     if (!paisesForm.ids.includes(paisSeleccionado.id)) {
-      setPaisesForm({
+      let newState = {
         current: "",
         seleccionados: [...paisesForm.seleccionados, paisSeleccionado],
         ids: [...paisesForm.ids, paisSeleccionado.id],
-      });
+      };
+      setPaisesForm(newState);
       paisesForm.seleccionados.length === 0 &&
         addNotification({
           description: "Para quitar un país del listado presione su bandera",
           type: "info",
         });
+      setErrors(validateForm({ ...form, paises: newState.ids }));
     } else {
       setPaisesForm({ ...paisesForm, current: "" });
     }
@@ -142,9 +144,9 @@ const FormActivity = ({
     setForm((prev) => ({ ...prev, paises: paisesForm.ids }));
   }, [paisesForm.ids]);
 
-  useEffect(() => {
-    setErrors(validateForm(form));
-  }, [form]);
+  // useEffect(() => {
+  //   setErrors(validateForm(form));
+  // }, [form]);
 
   useEffect(() => {
     addNotification({
@@ -321,13 +323,12 @@ const FormActivity = ({
         <div>
           {paisesForm.seleccionados.length ? (
             paisesForm.seleccionados.map((pais) => (
-              <div className={styles["container-bandera"]}>
+              <div key={pais.id} className={styles["container-bandera"]}>
                 <button name={pais.id} onClick={deleteBandera}>
                   x
                 </button>
                 <img
                   className={styles.bandera}
-                  key={pais.id}
                   src={pais.imagen_bandera}
                   alt={pais.nombre}
                   title={`Eliminar ${pais.nombre}`}
