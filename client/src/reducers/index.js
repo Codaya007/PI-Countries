@@ -1,5 +1,4 @@
-import { toast } from 'react-toastify';
-import { CHANGE_PAGE, GET_COUNTRIES, RESTART_COUNTRIES, SET_OPTIONS } from '../actions/types';
+import { ADD_NOTIFICATION, CHANGE_PAGE, DELETE_NOTIFICATION, GET_COUNTRIES, RESTART_COUNTRIES, SET_OPTIONS } from '../actions/types';
 import {
    SORT,
    GET_CONTINENTS,
@@ -18,6 +17,7 @@ const initialState = {
    paginatedCountries: [],
    currentPage: 1,
    loading: true,
+   notifications: [],
    options: {
       searchBy: "pais",
       sort: "asc",
@@ -28,15 +28,28 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
    let filtered;
+   let notifications;
+   let { type, payload } = action;
 
-   switch (action.type) {
+   switch (type) {
+      case ADD_NOTIFICATION:
+         // console.log(payload);
+         notifications = [...state.notifications];
+         notifications.push(payload);
+         return { ...state, notifications };
+      case DELETE_NOTIFICATION:
+         const { id } = payload;
+         let notificationsList = [...state.notifications];
+         // Filtro para quitar la que coincida con el id pasado
+         notifications = notificationsList.filter((e) => e.id !== id);
+         return { ...state, notifications };
       case SET_OPTIONS:
-         const { name, value } = action.payload;
+         const { name, value } = payload;
          return { ...state, options: { ...state.options, [name]: value } };
       case GET_COUNTRIES:
          return { ...state, countries: action.countries, countriesFiltered: action.countries };
       case SET_LOADING:
-         return { ...state, loading: action.payload };
+         return { ...state, loading: payload };
       case GET_CONTINENTS:
          return { ...state, continents: action.continents };
       case FILTER_BY_NAME:
@@ -50,8 +63,6 @@ const reducer = (state = initialState, action) => {
             if (state.options.continent !== "Todos") {
                filtered = filtered.filter(pais => pais.continente === state.options.continent)
             }
-            filtered.length === 0 ? toast.error(`Ningún país de ${state.options.continent} coincide con el criterio de búsqueda`) :
-               toast.info(`${filtered.length} países coinciden con su búsqueda`, { autoClose: 1800 });
             return { ...state, currentPage: 1, countriesFiltered: filtered };
          }
       case RESTART_FILTERS:
@@ -60,7 +71,7 @@ const reducer = (state = initialState, action) => {
          return { ...state, countriesFiltered: state.countries };
       // tengo q implementar una ruta en el back para poder filtrar por actividad:
       case CHANGE_PAGE:
-         return { ...state, currentPage: action.payload || 1 };
+         return { ...state, currentPage: payload || 1 };
       case SORT:
          const { sort, sortBy } = state.options;
          // console.log("Imprimiendo desde reducer sort: ")

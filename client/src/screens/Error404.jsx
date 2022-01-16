@@ -17,7 +17,7 @@ const Error404 = ({ content }) => {
         alt="Not Found"
       />
       <Button
-        className={`${styles.btn404} ${Aditionalstyle["button-primary"]}`}
+        className={`${styles.btn404} ${Aditionalstyle["button-primary-dark"]}`}
         href="/countries"
         content={"Volver al Inicio"}
       />

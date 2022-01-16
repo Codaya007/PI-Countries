@@ -10,7 +10,7 @@
 .btn-search,
 .filters .sortBy,
 .filters .sort {
-  background-color: #473d8a;
+  background-color: var(--dark-color);
   height: 40px;
   padding: 5px 8px;
   border: none;
@@ -31,7 +31,8 @@
 .btn-search {
   color: transparent;
   width: 40px;
-  background: #473d8a url(../assets/images/lupa.svg) no-repeat 98% center;
+  background: var(--dark-color) url(../assets/images/lupa.svg) no-repeat 98%
+    center;
   background-size: 35px;
 }
 
@@ -45,6 +46,9 @@
 @media screen and (max-width: 450px) {
   .input-search {
     width: 155px;
+  }
+  .filters {
+    margin: 1.5rem;
   }
 }
 

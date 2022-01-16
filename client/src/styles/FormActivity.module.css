@@ -1,21 +1,28 @@
 /* FORM PAGE */
 .form-container {
   width: 500px;
-  margin: 2rem auto;
+  margin: 3rem auto;
   background-color: rgba(255, 255, 255, 0.397);
   border: none;
   border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
-  /* display: flex; */
+  box-shadow: 0px 1px 5px 0px var(--box-shadow-color);
 }
 
 /* === validation styles === */
 .error-form {
-  color: #c71818;
+  color: var(--error-color);
   font-size: 14px;
   padding: 0 2rem;
   text-align: right;
+}
+
+.container-bandera {
+  width: 75px;
+  height: 75px;
+  position: relative;
+  display: inline-block;
+  margin: 0.4rem;
 }
 
 .bandera {
@@ -25,13 +32,30 @@
   height: 75px;
   width: 75px;
   object-fit: cover;
-  margin: 0.5rem;
+  margin: 0;
+}
+
+.container-bandera button {
+  position: relative;
+  right: 0.1em;
+  top: 0.1em;
+  float: right;
+  font-weight: 800;
+  color: rgb(179, 32, 32);
+  outline: none;
+  opacity: 0.75;
+  line-height: 0;
+  font-size: 20px;
+  padding: 0;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
 }
 
 .subtitle-form,
 .title-form {
   font-size: 30px;
-  color: darkslateblue;
+  color: var(--dark-color);
   padding-bottom: 1rem;
 }
 
@@ -45,17 +69,9 @@
   justify-content: space-evenly;
 }
 
-.fechas-container {
-  width: 70%;
-  margin: 1rem auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
 .selected-countries-title {
   font-size: 20px;
-  color: darkslateblue;
+  color: var(--primary-color);
   padding-bottom: 1rem;
   font-weight: bold;
 }
@@ -65,7 +81,7 @@
   width: 80%;
   border-radius: 10px;
   margin: 5px 0;
-  background-color: rgba(71, 61, 139, 0.308);
+  background-color: var(--contrast-color-primary);
   border: none;
   resize: none;
 }

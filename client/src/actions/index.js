@@ -12,9 +12,10 @@ import {
    SORT,
    FILTER_BY_ACTIVITY,
    PAGINATE_COUNTRIES,
-   CHANGE_PAGE
+   CHANGE_PAGE,
+   ADD_NOTIFICATION,
+   DELETE_NOTIFICATION
 } from './types';
-import { toast } from "react-toastify";
 
 // ACCIONES DE PETICIONES DE INFORMACIÓN
 export function getAllCountries() {
@@ -26,7 +27,10 @@ export function getAllCountries() {
          dispatch({ type: SORT });
       } catch (err) {
          console.log(err);
-         toast.error("No se han podido obtener los países");
+         dispatch(addNotification({
+            description: "No se han podido obtener los países",
+            type: "error",
+         }));
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -61,7 +65,10 @@ export function getContinents() {
          dispatch({ type: GET_CONTINENTS, continents });
       } catch (err) {
          console.log(err);
-         toast.error("No se han podido obtener los continentes");
+         dispatch(addNotification({
+            description: "No se han podido obtener los continentes",
+            type: "error",
+         }));
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -78,9 +85,12 @@ export function searchByName(query) {
          dispatch({ type: FILTER_BY_NAME, countries: response.data });
          dispatch({ type: SORT });
       } catch (err) {
-         console.log(err);
+         // console.log(err);
          dispatch({ type: FILTER_BY_NAME, countries: [] });
-         toast.error("Ningún país coincide con el criterio de búsqueda");
+         dispatch(addNotification({
+            description: "Ningún país coincide con el criterio de búsqueda",
+            type: "warning",
+         }));
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -98,10 +108,16 @@ export function createActivity(activity) {
                   "Content-Type": "application/json",
                },
             })
-         toast.success("La actividad ha sido creada exitosamente!");
+         dispatch(addNotification({
+            description: "La actividad ha sido creada exitosamente!",
+            type: "success",
+         }));
       } catch (err) {
          console.log(err);
-         toast.error("Ha ocurrido un error! No se ha podido crear la actividad");
+         dispatch(addNotification({
+            description: "Ha ocurrido un error! No se ha podido crear la actividad",
+            type: "error",
+         }));
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -121,7 +137,10 @@ export function searchByActivity(query) {
       } catch (err) {
          console.log(err);
          dispatch({ type: FILTER_BY_ACTIVITY, countries: [] });
-         toast.error("Ningún país coincide con el criterio de búsqueda");
+         dispatch(addNotification({
+            description: "Ningún país coincide con el criterio de búsqueda",
+            type: "warning",
+         }));
       } finally {
          dispatch({ type: SET_LOADING, payload: false });
       }
@@ -158,7 +177,10 @@ export function filterByContinent(continent) {
          } catch (err) {
             console.log(err);
             dispatch({ type: FILTER_BY_CONTINENT, countries: [] });
-            toast.error("Ningún país coincide con el criterio de búsqueda");
+            dispatch(addNotification({
+               description: "Ningún país coincide con el criterio de búsqueda",
+               type: "warning",
+            }));
          } finally {
             dispatch({ type: SET_LOADING, payload: false });
          }
@@ -174,4 +196,14 @@ export function paginateCountries() {
 
 export function changePage(n) {
    return { type: CHANGE_PAGE, payload: n };
+}
+
+// MOSTRANDO NOTIFICACIONES
+export function addNotification({ description, type }) {
+   const id = Math.floor(Math.random() * 101 + 1);
+   return { type: ADD_NOTIFICATION, payload: { type, description, id } }
+}
+
+export function deleteNotification(id) {
+   return { type: DELETE_NOTIFICATION, payload: { id } };
 }

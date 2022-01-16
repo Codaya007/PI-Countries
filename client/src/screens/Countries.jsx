@@ -50,8 +50,7 @@ const Countries = ({
             <Continent
               active={options.continent === continent.nombre}
               key={continent.nombre}
-              nombre={continent.nombre}
-              imagen={continent.imagen}
+              continent={continent}
               handleClick={() => {
                 setOptions("continent", continent.nombre);
                 filterByContinent(continent.nombre);
@@ -65,21 +64,16 @@ const Countries = ({
         (paginatedCountries.length > 0 ? (
           <div className={styles["countries-container"]}>
             {paginatedCountries[currentPage - 1].map((country) => {
-              return (
-                <Country
-                  key={country.id}
-                  id={country.id}
-                  imagen_bandera={country.imagen_bandera}
-                  nombre={country.nombre}
-                  continente={country.continente}
-                />
-              );
+              return <Country key={country.id} country={country} />;
             })}
           </div>
         ) : (
           <Message
             className={styles["countries-container"]}
-            content={"No se encontró ninguna coincidencia"}
+            content={
+              "No se encontró ninguna coincidencia" +
+              (options.continent !== "Todos" ? ` en ${options.continent}` : "")
+            }
           />
         ))}
       {!loading && paginatedCountries.length > 1 && (

@@ -34,7 +34,7 @@ const validateForm = (form) => {
    }
 
    if (!descripcion.trim()) {
-      errors.descripcion = "El campo 'descripción' es requerido";
+      errors.descripcion = "El campo descripción es requerido";
    } else if (descripcion.trim().length > 210) {
       errors.descripcion = "La descripción tiene un límite de 210 caracteres.";
    }

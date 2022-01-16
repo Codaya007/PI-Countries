@@ -7,20 +7,21 @@
   width: 38px;
   height: 30px;
   margin: 0 0.35rem;
-  background-color: #473d8abe;
+  background-color: var(--primary-color-transp);
   color: white;
   cursor: pointer;
 }
 
 .active-page {
-  background-color: rgb(71, 61, 139);
-  border: 1px solid black;
+  background-color: var(--dark-color);
+  box-shadow: 4px 2px 5px var(--box-shadow-color);
 }
 
 .previous {
   color: transparent;
   width: 40px;
-  background: #473d8abe url(../assets/images/anterior.svg) no-repeat 70% center;
+  background: var(--dark-color) url(../assets/images/anterior.svg) no-repeat 70%
+    center;
   background-size: 25px;
   padding: 5px 8px;
 }
@@ -28,7 +29,14 @@
 .next {
   color: transparent;
   width: 40px;
-  background: #473d8abe url(../assets/images/siguiente.svg) no-repeat 80% center;
+  background: var(--dark-color) url(../assets/images/siguiente.svg) no-repeat
+    80% center;
   background-size: 25px;
   padding: 5px 8px;
+}
+
+.page:hover,
+.previous:hover,
+.next:hover {
+  background-color: var(--dark-color);
 }

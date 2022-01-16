@@ -1,6 +1,18 @@
+:root {
+  --primary-color: #bd8b79;
+  --secondary-color: #ec3d32;
+  --dark-color: #b84142;
+  --error-color: #ee1010;
+  --primary-color-transp: #bd8b79a2;
+  --text-dark: #662526;
+  --background-color-app: #f5f0ec;
+  --contrast-color-primary: #ec3e3283;
+  --box-shadow-color: rgba(47, 79, 79, 0.61);
+}
+
 * {
   text-align: center;
-  color: #0d0c22;
+  color: var(--text-dark);
   font-family: "Haas Grot Text R Web", "Helvetica Neue", Arial, Helvetica,
     sans-serif;
 }
@@ -9,7 +21,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: -webkit-linear-gradient(left, #cf35e77c, #fa097975);
+  background-color: var(--background-color-app);
 }
 
 code {

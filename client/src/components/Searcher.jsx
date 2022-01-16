@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions";
 import Button from "./Button";
 import styles from "../styles/Searcher.module.css";
+import inputStyles from "../styles/Input.module.css";
 
 const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
   // un estado local para controlar el valor de la consulta
@@ -21,7 +21,7 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
 
     // REALIZO LA BÚSQUEDA
     if (!query) {
-      toast.warn("Primero escriba su consulta");
+      alert("Primero escriba su consulta");
     } else if (options.searchBy === "pais") {
       searchByName(query);
     } else {
@@ -36,21 +36,14 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
         <select
           className={styles.searchBy}
           name={"searchBy"}
+          value={options.searchBy}
           id={"searchBy"}
           onChange={handleChange}
         >
-          <option
-            selected={options.searchBy === "pais"}
-            value={"pais"}
-            key={"pais"}
-          >
+          <option value={"pais"} key={"pais"}>
             {"País"}
           </option>
-          <option
-            selected={options.searchBy === "actividad"}
-            value={"actividad"}
-            key={"actividad"}
-          >
+          <option value={"actividad"} key={"actividad"}>
             {"Actividad"}
           </option>
         </select>
@@ -75,25 +68,19 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
         />
       </form>
       <div className={styles.filters}>
+        <label className={inputStyles["label-form"]}>Ordenar por</label>
         <select
           className={styles.sortBy}
           name={"sortBy"}
           id={"sortBy"}
           onChange={handleChange}
+          value={options.sortBy}
         >
-          <option
-            selected={options.sortBy === "nombre"}
-            value={"nombre"}
-            key={"nombre"}
-          >
-            {"Por nombre"}
+          <option value={"nombre"} key={"nombre"}>
+            {"Nombre"}
           </option>
-          <option
-            selected={options.sortBy === "poblacion"}
-            value={"poblacion"}
-            key={"poblacion"}
-          >
-            {"Por población"}
+          <option value={"poblacion"} key={"poblacion"}>
+            {"Población"}
           </option>
         </select>
         <select
@@ -101,15 +88,12 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
           name={"sort"}
           id={"sort"}
           onChange={handleChange}
+          value={options.sort}
         >
-          <option selected={options.sort === "asc"} value={"asc"} key={"asc"}>
+          <option value={"asc"} key={"asc"}>
             {"Ascendente"}
           </option>
-          <option
-            selected={options.sort === "desc"}
-            value={"desc"}
-            key={"desc"}
-          >
+          <option value={"desc"} key={"desc"}>
             {"Descendente"}
           </option>
         </select>

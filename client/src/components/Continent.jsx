@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "../styles/Continent.module.css";
 
-const Continent = ({ nombre, imagen, handleClick, active }) => {
+const Continent = ({ continent, handleClick, active }) => {
+  const { nombre, imagen } = continent;
+
   return (
     <div
       className={

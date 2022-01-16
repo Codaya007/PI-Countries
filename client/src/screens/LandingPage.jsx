@@ -16,7 +16,7 @@ const LandingPage = () => {
         diferentes partes del mundo
       </h4>
       <Link className={styles["btn-landing"]} to="/countries">
-        <button className={stylesButton["button-primary"]}>
+        <button className={stylesButton["landing-button"]}>
           Empezar a explorar
         </button>
       </Link>

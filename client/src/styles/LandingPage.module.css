@@ -2,7 +2,7 @@
 
 .landing-container {
   display: grid;
-  grid-template-rows: 90px 200px 80px 60px 1fr;
+  grid-template-rows: 50px 200px 80px 50px 1fr;
   grid-template-columns: minmax(400px, 470px) 1fr;
   grid-template-areas:
     ". image"

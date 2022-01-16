@@ -1,18 +1,22 @@
 /* NAVBAR COMPONENT */
-.logo {
+.marca-container {
   display: flex;
   align-items: center;
+  width: 250px;
+}
+
+.logo {
   width: 50px;
   height: 50px;
 }
 
 .marca {
-  width: auto;
   text-decoration: none;
   text-align: center;
-  color: white;
-  margin: 0;
-  font-size: 1.1rem;
+  color: var(--dark-color);
+  margin-left: 5px;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .navbar {
@@ -20,11 +24,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  background-color: darkslateblue;
-  color: #fff;
+  background-color: transparent;
 }
+
 .nav-links a {
-  color: #fff;
+  color: var(--dark-color);
+}
+
+.nav-links a:hover {
+  color: white;
 }
 
 /* NAVBAR MENU */
@@ -34,7 +42,7 @@
   font-size: 18px;
 }
 .menu li:hover {
-  background-color: darkslateblue;
+  background-color: var(--primary-color);
   border-radius: 5px;
   transition: 0.3s ease;
 }
@@ -52,14 +60,14 @@ input[type="checkbox"] {
   display: none;
   font-size: 30px;
   user-select: none;
-  color: white;
+  color: var(--dark-color);
 }
 /* APPLYING MEDIA QUERIES */
 @media (max-width: 768px) {
   .menu {
     display: none;
     position: absolute;
-    background-color: darkslateblue;
+    background-color: var(--primary-color);
     right: 0;
     left: 0;
     text-align: center;
@@ -67,8 +75,11 @@ input[type="checkbox"] {
   }
   .menu li:hover {
     display: inline-block;
-    background-color: rgba(71, 61, 139, 0.74);
+    background-color: var(--primary-color);
     transition: 0.3s ease;
+  }
+  .nav-links a {
+    color: white;
   }
   .menu li + li {
     margin-top: 15px;

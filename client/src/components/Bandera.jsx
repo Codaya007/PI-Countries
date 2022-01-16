@@ -1,15 +1,7 @@
 import React from "react";
 import styles from "../styles/Bandera.module.css";
 
-const Bandera = ({
-  className,
-  border,
-  width,
-  circle,
-  imagen_bandera,
-  nombre,
-  title,
-}) => {
+const Bandera = ({ className, imagen_bandera, nombre, title }) => {
   return (
     <>
       <img

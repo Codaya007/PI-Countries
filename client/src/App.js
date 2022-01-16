@@ -9,8 +9,7 @@ import { connect } from "react-redux";
 import { getAllCountries, getContinents, paginateCountries } from "./actions";
 import { bindActionCreators } from "redux";
 import LandingPage from './screens/LandingPage';
-import { ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import Notification from './components/Notification';
 
 function App({ getAllCountries, getContinents, countries, paginateCountries }) {
 
@@ -25,8 +24,9 @@ function App({ getAllCountries, getContinents, countries, paginateCountries }) {
 
   return (
     <div className="App">
-      <ToastContainer />
       <Navbar />
+      {/* Añadiendo contenedor de notificaciones */}
+      <Notification />
       <Routes>
         <Route path='/'>
           <Route index element={<LandingPage />} />

@@ -1,6 +1,8 @@
 /* BUTTON  COMPONENT*/
-.button-primary,
-.button-secondary {
+.button-primary-dark,
+.button-secondary,
+.landing-button,
+.button-secondary-dark {
   height: 40px;
   padding: 10px 16px;
   border: none;
@@ -8,9 +10,15 @@
   cursor: pointer;
 }
 
-.button-primary {
-  background-color: darkslateblue;
+.button-primary-dark,
+.landing-button {
+  background-color: var(--dark-color);
   color: white;
+}
+
+.landing-button {
+  box-shadow: -7px -5px 0px var(--primary-color);
+  font-size: 1rem;
 }
 
 .button-content {
@@ -18,7 +26,14 @@
 }
 
 .button-secondary {
-  color: darkmagenta;
-  border: 2px solid darkmagenta;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
   background-color: white;
+}
+
+.button-secondary-dark,
+.button-secondary:hover {
+  background-color: white;
+  color: var(--dark-color);
+  border: 2px solid var(--dark-color);
 }

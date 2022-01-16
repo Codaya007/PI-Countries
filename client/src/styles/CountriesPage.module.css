@@ -1,14 +1,15 @@
 /* COUNTRIES PAGE*/
 .countries-page-container {
   display: grid;
-  grid-template-columns: 250px 1fr;
-  grid-template-rows: 95px 40px 1fr;
+  grid-template-columns: 245px 1fr;
+  grid-template-rows: 125px 40px 1fr;
   grid-template-areas:
-    ". searcher"
-    "filters pagination"
+    "filters searcher"
+    ". pagination"
     "continents countries";
   justify-items: center;
   align-items: center;
+  gap: 1rem;
 }
 
 .continents-container {
@@ -20,21 +21,23 @@
   font-size: 1.3rem;
   padding-left: 2rem;
   text-align: left;
-  color: #473d8a;
+  color: var(--primary-color);
 }
 
 .countries-container {
   grid-area: countries;
   align-self: stretch;
+  margin: 2rem auto;
 }
 
 .pagination-container {
   grid-area: pagination;
 }
+
 @media screen and (max-width: 850px) {
   .countries-page-container {
     grid-template-columns: 100%;
-    grid-template-rows: 90px min-content 40px auto 50px;
+    grid-template-rows: 90px min-content 55px auto 50px;
     grid-template-areas:
       "searcher"
       "continents"

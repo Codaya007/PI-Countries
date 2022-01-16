@@ -2,34 +2,42 @@
   display: block;
   text-align: left;
   font-size: 16px;
-  color: darkslateblue;
+  padding: 5px;
+  color: var(--primary-color);
 }
 
 .input-country,
 .input-form {
   height: 30px;
-  width: 75%;
+  width: 85%;
   border-radius: 10px;
   margin: 5px 0;
-  background-color: rgba(71, 61, 139, 0.308);
+  background-color: var(--contrast-color-primary);
   border: none;
+  accent-color: var(--primary-color);
 }
 
 .input-country {
   border-radius: 10px 0 0 10px;
-  width: 60%;
+  width: 65%;
   display: inline-block;
+}
+
+@media screen and (max-width: 390px) {
+  .input-country {
+    width: 50%;
+  }
 }
 
 .btn-add-country {
   display: inline-block;
   height: 32px;
-  background-color: darkslateblue;
+  background-color: var(--dark-color);
   color: white;
   border-radius: 0 10px 10px 0;
 }
 
 .input-container {
-  width: 90%;
+  width: 80%;
   margin: 0.5rem auto;
 }

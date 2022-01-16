@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { URL_GET_COUNTRY } from "../assets/constants";
 import Activity from "../components/Activity";
 import Bandera from "../components/Bandera";
@@ -22,9 +21,6 @@ const CountryDetail = () => {
 
         setCountry(country.data);
       } catch (err) {
-        toast.warn("No se ha podido encontrar el país solicitado", {
-          autoClose: 2000,
-        });
       } finally {
         setLoading(false);
       }

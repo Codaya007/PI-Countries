@@ -1,6 +1,6 @@
 /* COUNTRY DETAIL */
 .title-detail {
-  color: darkslateblue;
+  color: var(--primary-color);
   font-size: 30px;
 }
 
