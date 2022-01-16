@@ -18,7 +18,7 @@ module.exports = [
    {
       "nombre": "Alpinismo",
       "descripcion": "El alpinismo es la más antigua y completa de las modalidades deportivas de montaña.",
-      "dificultad": "2",
+      "dificultad": "1",
       "duracion": "10",
       "temporada": "verano",
       "paises": ["esp", "ita", "grc", "deu", "svn"]
@@ -26,7 +26,7 @@ module.exports = [
    {
       "nombre": "Canopy o Canopi",
       "descripcion": "El canopy o dosel es un deporte muy divertido que consiste en suspenderse y deslizarse por los aires mediante cables que están entrelazados de esquina a esquina entre ramas de árboles.",
-      "dificultad": "3",
+      "dificultad": "2",
       "duracion": "4",
       "temporada": "verano",
       "paises": ["zaf", "cri", "hti", "gbr", "usa", "chn", "pri"]
