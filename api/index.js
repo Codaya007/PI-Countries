@@ -21,12 +21,14 @@ const server = require('./src/app.js');
 const { conn, Country } = require('./src/db.js');
 const getAllCountriesAPI = require('./src/helpers/getAllCountriesAPI.js');
 const { PORT } = process.env;
-
+const activities = require("./src/data/activities");
+const { createActivity } = require("./src/helpers")
 // Syncing all the models at once.
 conn.sync({ force: true })
   .then(async () => {
 
     try {
+      // AÑADO LOS PAISES
       let response = await getAllCountriesAPI();
 
       if (response.error) {
@@ -48,6 +50,10 @@ conn.sync({ force: true })
         // ya que tengo cada país con los datos que necesito, procedo a guardarlos en la DB
         await Country.bulkCreate(countriesMaped, { validate: true });
       }
+
+      // AÑADO LAS ACTIVIDADES
+      activities.map(activity => createActivity(activity));
+
     } catch (err) {
       console.log(err);
       console.log('No ha sido posible inicializar la BD')
