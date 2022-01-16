@@ -25,12 +25,7 @@ const initialPaisesForm = {
   ids: [],
 };
 
-const FormActivity = ({
-  createActivity,
-  countries,
-  loadingRequest,
-  addNotification,
-}) => {
+const FormActivity = ({ createActivity, countries, addNotification }) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [paisesForm, setPaisesForm] = useState(initialPaisesForm);
@@ -39,12 +34,12 @@ const FormActivity = ({
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setForm((prevState) => {
-      return {
-        ...prevState,
-        [name]: name === "paises" ? paisesForm.ids : value,
-      };
-    });
+    let newState = {
+      ...form,
+      [name]: name === "paises" ? paisesForm.ids : value,
+    };
+    setForm(newState);
+    setErrors(validateForm(newState));
   };
 
   // Cuando el input pierda el foco de atención, se tienen que validar los campos
@@ -143,10 +138,6 @@ const FormActivity = ({
   useEffect(() => {
     setForm((prev) => ({ ...prev, paises: paisesForm.ids }));
   }, [paisesForm.ids]);
-
-  // useEffect(() => {
-  //   setErrors(validateForm(form));
-  // }, [form]);
 
   useEffect(() => {
     addNotification({
@@ -291,7 +282,32 @@ const FormActivity = ({
         {errors.paises && (
           <Message className={styles["error-form"]} content={errors.paises} />
         )}
-
+        {/* MUESTRO LOS PAISES QUE HE SELECCIONADO */}
+        <div>
+          <p className={styles["selected-countries-title"]}>
+            Paises seleccionados:
+          </p>
+          <div>
+            {paisesForm.seleccionados.length ? (
+              paisesForm.seleccionados.map((pais) => (
+                <div key={pais.id} className={styles["container-bandera"]}>
+                  <button name={pais.id} onClick={deleteBandera}>
+                    x
+                  </button>
+                  <img
+                    className={styles.bandera}
+                    src={pais.imagen_bandera}
+                    alt={pais.nombre}
+                    title={`Eliminar ${pais.nombre}`}
+                    name={pais.id}
+                  />
+                </div>
+              ))
+            ) : (
+              <Message content={"Aún no ha seleccionado ningún país"} />
+            )}
+          </div>
+        </div>
         {/* BOTONES DEL FORMULARIO */}
         <div className={styles["btns-form"]}>
           <input
@@ -306,7 +322,7 @@ const FormActivity = ({
               });
             }}
           />
-          {Object.keys(errors).length === 0 && !loadingRequest && (
+          {Object.keys(errors).length === 0 && (
             <input
               className={stylesButton["button-primary-dark"]}
               type="submit"
@@ -315,32 +331,6 @@ const FormActivity = ({
           )}
         </div>
       </form>
-      {/* MUESTRO LOS PAISES QUE HE SELECCIONADO */}
-      <div>
-        <p className={styles["selected-countries-title"]}>
-          Paises seleccionados:
-        </p>
-        <div>
-          {paisesForm.seleccionados.length ? (
-            paisesForm.seleccionados.map((pais) => (
-              <div key={pais.id} className={styles["container-bandera"]}>
-                <button name={pais.id} onClick={deleteBandera}>
-                  x
-                </button>
-                <img
-                  className={styles.bandera}
-                  src={pais.imagen_bandera}
-                  alt={pais.nombre}
-                  title={`Eliminar ${pais.nombre}`}
-                  name={pais.id}
-                />
-              </div>
-            ))
-          ) : (
-            <Message content={"Aún no ha seleccionado ningún país"} />
-          )}
-        </div>
-      </div>
     </div>
   );
 };
@@ -348,7 +338,6 @@ const FormActivity = ({
 const mapStateToProps = (state) => {
   return {
     countries: state.countries,
-    loadingRequest: state.loading,
   };
 };
 
