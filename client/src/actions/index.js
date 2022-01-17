@@ -41,13 +41,13 @@ export function getContinents() {
    return async (dispatch) => {
       dispatch({ type: SET_LOADING, payload: true });
       try {
-         const reqSvgs = require.context(
+         const reqSvgs = require.context && require.context(
             "../assets/images/continentes",
             true,
             /\.svg$/
          );
 
-         const svgs = reqSvgs.keys().reduce((images, path) => {
+         const svgs = reqSvgs && reqSvgs.keys().reduce((images, path) => {
             images[path.substring(2, path.length - 4)] = reqSvgs(path);
             return images;
          }, {});
@@ -59,7 +59,7 @@ export function getContinents() {
 
          continents = continents.map((continent) => ({
             ...continent,
-            imagen: svgs[continent.nombre].default,
+            imagen: svgs ? svgs[continent.nombre].default : "",
          }));
 
          dispatch({ type: GET_CONTINENTS, continents });
