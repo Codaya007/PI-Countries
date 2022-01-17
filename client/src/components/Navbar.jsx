@@ -17,14 +17,14 @@ const Navbar = () => {
         <label htmlFor="checkbox_toggle" className={styles["hamburger"]}>
           &#9776;
         </label>
-        <div className={styles["menu"]}>
+        <ul className={styles["menu"]}>
           <li>
             <Link to="/countries">Paises</Link>
           </li>
           <li>
             <Link to="/activities/create">Crear Actividad</Link>
           </li>
-        </div>
+        </ul>
       </ul>
     </div>
   );

@@ -34,6 +34,7 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
     <>
       <form className={styles.searcher} onSubmit={handleSubmit}>
         <select
+          title="searchBy"
           className={styles.searchBy}
           name={"searchBy"}
           value={options.searchBy}
@@ -70,6 +71,7 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
       <div className={styles.filters}>
         <label className={inputStyles["label-form"]}>Ordenar por</label>
         <select
+          title="sortBy"
           className={styles.sortBy}
           name={"sortBy"}
           id={"sortBy"}
@@ -84,6 +86,7 @@ const Searcher = ({ searchByName, searchByActivity, options, setOptions }) => {
           </option>
         </select>
         <select
+          title="sort"
           className={styles.sort}
           name={"sort"}
           id={"sort"}

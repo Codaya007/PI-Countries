@@ -9,9 +9,7 @@ const Notification = ({ notificationsList, deleteNotification }) => {
   const [icons, setIcons] = useState({});
 
   useEffect(() => {
-    const iconsSvgs =
-      require.context &&
-      require.context("../assets/images/icons", true, /\.svg$/);
+    const iconsSvgs = require.context("../assets/images/icons", true, /\.svg$/);
 
     const icons = iconsSvgs.keys().reduce((images, path) => {
       images[path.substring(2, path.length - 4)] = iconsSvgs(path);

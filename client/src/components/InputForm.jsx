@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/Input.module.css";
 
 const InputForm = ({
+  title,
   name,
   value,
   type,
@@ -12,6 +13,7 @@ const InputForm = ({
 }) => {
   return (
     <div className={styles["input-container"]}>
+      <label className={styles["label-form"]}>{title}</label>
       <input
         className={styles["input-form"]}
         type={type}

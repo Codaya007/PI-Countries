@@ -39,7 +39,7 @@
   margin: 0;
   text-align: left;
   font-weight: lighter;
-  height: fit-content;
+  height: max-content;
   margin-left: -1px;
   overflow: hidden;
   text-overflow: ellipsis;

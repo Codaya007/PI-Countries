@@ -41,7 +41,7 @@ export function getContinents() {
    return async (dispatch) => {
       dispatch({ type: SET_LOADING, payload: true });
       try {
-         const reqSvgs = require.context && require.context(
+         const reqSvgs = require.context(
             "../assets/images/continentes",
             true,
             /\.svg$/

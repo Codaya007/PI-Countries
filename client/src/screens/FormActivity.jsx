@@ -187,7 +187,7 @@ const FormActivity = ({ createActivity, countries, addNotification }) => {
 
         {/* DIFICULTAD DE LA ACTIVIDAD */}
         <InputForm
-          title="Dificultad:"
+          title="Nivel de dificultad:"
           type="range"
           min={0}
           max={5}
@@ -224,9 +224,10 @@ const FormActivity = ({ createActivity, countries, addNotification }) => {
         {/* TEMPORADA DE LA ACTIVIDAD */}
         <div className={stylesInputs["input-container"]}>
           <label className={stylesInputs["label-form"]}>
-            "Temporada propicia para realizar la actividad:"
+            Temporada propicia para realizar la actividad:
           </label>
           <select
+            title="Temporada"
             className={stylesInputs["input-form"]}
             name={"temporada"}
             value={form.temporada}
