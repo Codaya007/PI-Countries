@@ -5,14 +5,14 @@ const { getAllActivities, validateActivity } = require('../middlewares');
 
 const router = Router();
 
-// @route GET /activities
+// @route GET /activity
 // @desc Get all categories
 // @access Public
 router.get('/', getAllActivities, (req, res, next) => {
    req.error ? next(req.error) : res.json(req.activities);
 })
 
-// @route POST /activities
+// @route POST /activity
 // @desc Create a new activity
 // @access Public
 router.post('/', validateActivity,

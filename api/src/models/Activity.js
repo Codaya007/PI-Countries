@@ -20,6 +20,10 @@ module.exports = (Sequelize, DataTypes) => {
          },
          duracion: {
             type: DataTypes.FLOAT,
+            validate: {
+               min: 1,
+               max: 48
+            }
          },
          temporada: {
             type: DataTypes.ENUM('Verano', 'Otoño', 'Invierno', 'Primavera')
