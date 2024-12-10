@@ -52,6 +52,7 @@ conn.sync({ force: true })
 
         // ya que tengo cada país con los datos que necesito, procedo a guardarlos en la DB
         await Country.bulkCreate(countriesMaped, { validate: true });
+        console.log("Países insertados correctamente");
       }
 
       // AÑADO LAS ACTIVIDADES
@@ -61,8 +62,8 @@ conn.sync({ force: true })
       console.log(err);
       console.log('No ha sido posible inicializar la BD')
     } finally {
-      server.listen(PORT, () => {
-        console.log(`Listening at port ${PORT}`); // eslint-disable-line no-console
+      server.listen(PORT || 5000, () => {
+        console.log(`Listening at port ${PORT || 5000}`); // eslint-disable-line no-console
       })
     }
   })
