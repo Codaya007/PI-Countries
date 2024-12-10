@@ -6,9 +6,13 @@ module.exports = async () => {
 
    try {
       const response = await axios.get(urlAPI);
+
+      console.log("RESPUESTA PAÍSES: ", response);
+
       data.countries = response.data;
    } catch (err) {
       console.log(err);
+
       data.error = {
          status: err.response.status,
          message: err.response.statusText
