@@ -7,7 +7,7 @@ module.exports = async () => {
    console.log({ urlAPI })
 
    try {
-      const response = await axios.get(urlAPI, { timeout: 6000 }); // Timeout de 5 segundos
+      const response = await axios.get(urlAPI, { timeout: 20000 }); // Timeout de 5 segundos
 
       console.log("RESPUESTA PAÍSES: ", response);
 
