@@ -27,9 +27,12 @@ const { createActivity } = require("./src/helpers")
 conn.sync({ force: true })
   .then(async () => {
 
+    console.log("Después de establecer la conexión")
     try {
       // AÑADO LOS PAISES
       let response = await getAllCountriesAPI();
+
+      console.log("RESPONSE: ", response)
 
       if (response.error) {
         throw new Error(response.error);
