@@ -37,7 +37,7 @@ conn.sync({ force: true })
       if (response.error) {
         throw new Error(response.error);
       } else {
-        let countriesMaped = response.map((country) => {
+        let countriesMaped = response.countries.map((country) => {
           return {
             id: country.cca3.toUpperCase(),
             nombre: country.name.common,
