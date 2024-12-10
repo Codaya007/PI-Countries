@@ -21,8 +21,9 @@ const server = require('./src/app.js');
 const { conn, Country } = require('./src/db.js');
 const getAllCountriesAPI = require('./src/helpers/getAllCountriesAPI.js');
 const { PORT } = process.env;
-const activities = require("./src/data/activities");
-const { createActivity } = require("./src/helpers")
+const activities = require("./src/data/activities.js");
+const { createActivity } = require("./src/helpers/index.js")
+
 // Syncing all the models at once.
 conn.sync({ force: true })
   .then(async () => {
@@ -68,7 +69,7 @@ conn.sync({ force: true })
     }
   })
   .catch((err) => {
-    console.log(err.message);
+    console.log(err);
     console.log(`No se ha podido conectar a la BBDD`);
   });
 

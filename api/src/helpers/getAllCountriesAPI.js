@@ -1,28 +1,37 @@
-const axios = require('axios');
+const { default: axios } = require("axios");
 
 module.exports = async () => {
    let data = {};
    const urlAPI = 'https://restcountries.com/v3/all';
 
-   try {
-      const response = await axios.get(urlAPI);
+   console.log({ urlAPI })
 
-      // Verificar si la respuesta tiene los datos esperados
-      console.log("RESPUESTA PAÍSES: ", response.data);
+   try {
+      const response = await axios.get(urlAPI, { timeout: 6000 }); // Timeout de 5 segundos
+
+      console.log("RESPUESTA PAÍSES: ", response);
 
       data.countries = response.data;
    } catch (err) {
-      console.log("Error al obtener los países:", err);
+      console.log("Error al obtener países:", err);
 
-      // Verificar si el error tiene una respuesta
       if (err.response) {
+         // Error de respuesta HTTP
          data.error = {
             status: err.response.status,
             message: err.response.statusText
          };
-      } else {
+      } else if (err.request) {
+         // Error de solicitud (sin respuesta)
          data.error = {
-            message: "Error desconocido al acceder a la API"
+            status: 'No response',
+            message: 'No se recibió respuesta de la API'
+         };
+      } else {
+         // Error desconocido
+         data.error = {
+            status: 'Unknown Error',
+            message: err.message
          };
       }
    }
